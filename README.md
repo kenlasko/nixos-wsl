@@ -39,6 +39,34 @@ sudo ln -s ~/nixos /etc/nixos
 sudo nixos-rebuild switch
 ```
 9. Exit and re-login
+10. Use this script to copy kubectl/talosctl/omnictl configurations from outside the image
+```
+# Get the WSL host path for the logged-in user
+HOSTPATH=$(echo "$WSLPATH" | grep -oP '(/mnt/\w/Users/\w+)' | head -1)
+
+# Ensure ~/.kube directory exists, then copy the config file
+if [ -f "$HOSTPATH/.kube/config" ]; then
+    [ ! -d ~/.kube ] && mkdir -p ~/.kube 
+    cp "$HOSTPATH/.kube/config" ~/.kube/config
+else
+    echo "No kubeconfig file found in $HOSTPATH"
+fi
+
+# Repeat for talosctl and omnictl
+if [ -f "~/omni/talosconfig.yaml" ]; then
+    [ ! -d ~/.talos ] && mkdir -p ~/.talos 
+    cp "~/omni/talosconfig.yaml" ~/.talos/config
+else
+    echo "No talosconfig file found. Clone the kenlasko/omni repo to get this file"
+fi
+
+if [ -f "~/omni/omniconfig.yaml" ]; then
+    [ ! -d ~/.config/omni/ ] && mkdir -p ~/.config/omni/
+    cp "~/omni/omniconfig.yaml" ~/.config/omni/config
+else
+    echo "No omniconfig file found. Clone the kenlasko/omni repo to get this file"
+fi
+```
 
 # Troubleshooting
 ## Git Push from VSCode fails
