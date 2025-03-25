@@ -39,3 +39,13 @@ sudo ln -s ~/nixos /etc/nixos
 sudo nixos-rebuild switch
 ```
 9. Exit and re-login
+
+# Troubleshooting
+## Git Push from VSCode fails
+If you get `Host key verification failed. fatal: Could not read from remote repository.` when trying to push a git update to the remote repo, try this:
+1. From VSCode, open a terminal and type:
+```
+git push
+```
+
+Answer yes to any questions you get.
