@@ -1,3 +1,4 @@
+# Installation
 1. Install NixOS in WSL by downloading and double-clicking the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL
 2. Run the following in Windows to set the default username to ken:
 ```
@@ -40,6 +41,11 @@ sudo nixos-rebuild switch
 ```
 8. Exit and re-login
 9. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image
+
+# Updating NixOS
+```
+sudo nixos-rebuild switch --recreate-lock-file --flake .
+```
 
 # Troubleshooting
 ## Git Push from VSCode fails
