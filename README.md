@@ -25,6 +25,7 @@ nix-env -i git
 git config --global user.email "ken.lasko@gmail.com"
 git config --global user.name "Ken Lasko"
 git clone git@github.com:kenlasko/nixos-wsl.git nixos
+sudo cp -r nixos/* /etc/nixos
 ```
 6. Build OS
 ```
