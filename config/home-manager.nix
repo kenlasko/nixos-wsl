@@ -2,7 +2,7 @@
 
 let
   wslpath = builtins.getEnv "WSLPATH";
-  regex = "(/mnt/[a-z]/Users/[a-zA-Z0-9._-]+)/"; # Escaped regex for Nix strings
+  regex = "(/mnt/[a-z]/Users/[a-zA-Z0-9._-]+)/";
   match = lib.strings.match regex wslpath;
   extractedHomeDir = if match != null then
     builtins.elemAt match 0  # Extract the full match (group 0)
@@ -30,7 +30,7 @@ in
 
   home.sessionVariables.WSL_HOME = extractedHomeDir;
   home.enableNixpkgsReleaseCheck = false;
-
+  home.stateVersion = "24.11";
   # home.activation.copyKubeConfig = pkgs.lib.mkAfter ''
   #   if [ -n "$WINDOWS_HOME" ]; then
   #     mkdir -p "${config.home.homeDirectory}/.kube"
@@ -48,6 +48,8 @@ in
       source <(cilium completion bash)
     '';
     bashrcExtra = ''
+      eval "$(ssh-agent -s)"   # Start SSH agent
+      ssh-add ~/.ssh/id_rsa    # Add your SSH private key
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       complete -F __start_kubectl k
     '';
@@ -59,16 +61,6 @@ in
       tf = "terraform";
     };
   };
-
-  # This value determines the home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update home Manager without changing this value. See
-  # the home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "24.11";
 
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
