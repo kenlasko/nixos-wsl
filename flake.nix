@@ -21,10 +21,9 @@
             config.allowUnfree = true;
           };
         };
+
         modules = [
           sops-nix.nixosModules.sops
-          # Import the previous configuration.nix we used,
-          # so the old configuration file still takes effect
           ./configuration.nix
           ./config
           home-manager.nixosModules.home-manager
@@ -37,6 +36,7 @@
           {
             system.stateVersion = "24.11";
             wsl.enable = true;
+            wsl.defaultUser = "ken";
           }
         ];
       };
