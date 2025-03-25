@@ -16,7 +16,11 @@ chmod 400 ~/.ssh/id_rsa
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 ```
-5. Clone the NixOS repo
+5. Temporarily install Git
+```
+nix-env -i git
+```
+7.  Clone the NixOS repo
 ```
 git config --global user.email "ken.lasko@gmail.com"
 git config --global user.name "Ken Lasko"
