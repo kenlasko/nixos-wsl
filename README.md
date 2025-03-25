@@ -38,3 +38,4 @@ sudo ln -s ~/nixos /etc/nixos
 ```
 sudo nixos-rebuild switch
 ```
+9. Exit and re-login

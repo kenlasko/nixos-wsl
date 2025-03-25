@@ -22,6 +22,8 @@ in
     git                 # Git version control
     gnupg               # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
     jq                  # Lightweight and flexible command-line JSON processor
+    kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
+    terraform           # Tool for building, changing, and versioning infrastructure safely and efficiently
     wget                # A network utility to retrieve files from the Web
     wslu                # Windows Subsystem for Linux utilities
   ];
@@ -41,14 +43,19 @@ in
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    # TODO add your custom bashrc here
+    initExtra = ''
+      source <(kubectl completion bash)
+      source <(cilium completion bash)
+    '';
     bashrcExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+      complete -F __start_kubectl k
     '';
 
     # set some aliases, feel free to add more or remove some
     shellAliases = {
       k = "kubectl";
+      cilium = "cilium --namespace=cilium";
     };
   };
 
