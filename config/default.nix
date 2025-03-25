@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./git.nix
+    ./k8s.nix
   ];
 
   # Nix-specific settings

@@ -2,7 +2,8 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
@@ -11,12 +12,16 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, nixos-wsl, sops-nix, home-manager, ... }: {
+  outputs = inputs@{ nixpkgs, nixpkgs-stable, nixos-wsl, sops-nix, home-manager, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = {
+          pkgs-stable = import nixpkgs {
+            config.allowUnfree = true;
+          };
+        };
         modules = [
-          nixos-wsl.nixosModules.default
           sops-nix.nixosModules.sops
           # Import the previous configuration.nix we used,
           # so the old configuration file still takes effect
@@ -27,6 +32,11 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ken = import ./config/home-manager.nix;
+          }
+          nixos-wsl.nixosModules.default
+          {
+            system.stateVersion = "24.11";
+            wsl.enable = true;
           }
         ];
       };
