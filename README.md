@@ -8,7 +8,7 @@ notepad %USERPROFILE%\.wslconfig
 [user]
 default = ken
 ```
-5. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
+4. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
 ```
 chmod 400 ~/.ssh/id_rsa
 # Start ssh-agent
@@ -16,7 +16,7 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 ```
 
-6. Clone all necessary repos
+5. Clone all necessary repos
 ```
 git config --global user.email "ken.lasko@gmail.com"
 git config --global user.name "Ken Lasko"
@@ -29,17 +29,17 @@ git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
 ```
-7. Symlink configuration.nix to Github synced folder
+6. Symlink configuration.nix to Github synced folder
 ```
 sudo mv /etc/nixos/ /etc/nixos-BAK/
 sudo ln -s ~/nixos /etc/nixos
 ```
-8. Build OS
+7. Build OS
 ```
 sudo nixos-rebuild switch
 ```
-9. Exit and re-login
-10. Run the [nixos/scripts/copy-config.sh] script to copy kubectl/talosctl/omnictl configurations from outside the image
+8. Exit and re-login
+9. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image
 
 # Troubleshooting
 ## Git Push from VSCode fails
@@ -48,5 +48,4 @@ If you get `Host key verification failed. fatal: Could not read from remote repo
 ```
 git push
 ```
-
-Answer yes to any questions you get.
+2. Answer yes to any questions you get.
