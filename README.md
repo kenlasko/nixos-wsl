@@ -32,13 +32,15 @@ sudo cp -r nixos/* /etc/nixos
 sudo nixos-rebuild switch
 ```
 7. Exit and re-login
-8. Symlink configuration.nix to Github synced folder
-```
-sudo mv /etc/nixos/ /etc/nixos-BAK/
-sudo ln -s ~/nixos /etc/nixos
-```
+
 9. Ensure you're logged in as ken and re-add key and repos
 ```
+mkdir .ssh
+cp /home/nixos/.ssh/* ~/.ssh
+chmod 400 ~/.ssh/id_rsa
+# Start ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
 git clone git@github.com:kenlasko/nixos-wsl.git nixos
 git clone git@github.com:kenlasko/k8s.git
 git clone git@github.com:kenlasko/k8s-lab.git
@@ -48,7 +50,17 @@ git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
 ```
+8. Symlink configuration.nix to Github synced folder
+```
+sudo mv /etc/nixos/ /etc/nixos-BAK/
+sudo ln -s ~/nixos /etc/nixos
+```
 10. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image
+```
+chmod u+x nixos/scripts/copy-config.sh
+./nixos/scripts/copy-config.sh
+
+```
 
 # Updating NixOS
 ```
