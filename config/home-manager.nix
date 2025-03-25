@@ -48,8 +48,6 @@ in
       source <(cilium completion bash)
     '';
     bashrcExtra = ''
-      eval "$(ssh-agent -s)"   # Start SSH agent
-      ssh-add ~/.ssh/id_rsa    # Add your SSH private key
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       complete -F __start_kubectl k
     '';
