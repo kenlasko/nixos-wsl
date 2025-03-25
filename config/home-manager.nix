@@ -54,8 +54,9 @@ in
 
     # set some aliases, feel free to add more or remove some
     shellAliases = {
-      k = "kubectl";
       cilium = "cilium --namespace=cilium";
+      k = "kubectl";
+      tf = "terraform";
     };
   };
 
