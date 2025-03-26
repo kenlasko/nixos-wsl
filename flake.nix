@@ -42,7 +42,7 @@
           {
             programs.nix-ld = {
               enable = true;
-              package = inputs.nixpkgs.lib.pkgs.nix-ld-rs;
+              package = pkgs.nix-ld-rs;
             };
           }
         ];
