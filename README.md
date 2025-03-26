@@ -1,46 +1,35 @@
+# Introduction
+NixOS is a declarative OS that has a very similar philosophy to Kubernetes, where all configuration is declared in `.nix` files, and the OS will adjust to match that declaration.
+
+This is my build process for NixOS running in Windows WSL, which is basically a VM running NixOS. It is designed for the following:
+- Managing Kubernetes clusters via `kubectl` along with supporting tools, such as `talosctl`, `omnictl`, etc
+- Building multi-arch Docker images for my UCDialplans.com website
+- Support for VSCode Remote
+
 # Installation
 1. Install NixOS in WSL by downloading and double-clicking the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL
-2. Run the following in Windows to set the default username to ken:
-```
-notepad %USERPROFILE%\.wslconfig
-```
-3. Paste the following text into `%USERPROFILE%\.wslconfig` and save:
+2. Paste the following text into `%USERPROFILE%\.wslconfig` and save:
 ```
 [user]
 default = ken
 ```
-4. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
+3. Clone the NixOS repo and rebuild the OS
 ```
-chmod 400 ~/.ssh/id_rsa
-# Start ssh-agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-```
-5. Temporarily install Git
-```
-nix-env -i git
-```
-7.  Clone the NixOS repo
-```
-git config --global user.email "ken.lasko@gmail.com"
-git config --global user.name "Ken Lasko"
-git clone git@github.com:kenlasko/nixos-wsl.git nixos
+export NIX_CONFIG="experimental-features = nix-command flakes"
+nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos
 sudo cp -r nixos/* /etc/nixos
-```
-6. Build OS
-```
 sudo nixos-rebuild switch
 ```
-7. Exit and re-login
-
-9. Ensure you're logged in as ken and re-add key and repos
+4. Exit and re-login. Should automatically login as `ken`
+5. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
 ```
-mkdir .ssh
-cp /home/nixos/.ssh/* ~/.ssh
 chmod 400 ~/.ssh/id_rsa
 # Start ssh-agent
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
+```
+6.  Download all necessary repos
+```
 git clone git@github.com:kenlasko/nixos-wsl.git nixos
 git clone git@github.com:kenlasko/k8s.git
 git clone git@github.com:kenlasko/k8s-lab.git
@@ -50,17 +39,16 @@ git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
 ```
-8. Symlink configuration.nix to Github synced folder
+7. Symlink `/etc/nixos` to Github synced folder
 ```
-sudo mv /etc/nixos/ /etc/nixos-BAK/
+sudo rm -rf /etc/nixos/
 sudo ln -s ~/nixos /etc/nixos
 ```
-10. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image
+8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image
 ```
-chmod u+x nixos/scripts/copy-config.sh
 ./nixos/scripts/copy-config.sh
 ```
-11. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory
+9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory
 
 # NixOS Commands
 ## Rebuild
