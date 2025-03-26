@@ -60,6 +60,7 @@ sudo ln -s ~/nixos /etc/nixos
 chmod u+x nixos/scripts/copy-config.sh
 ./nixos/scripts/copy-config.sh
 ```
+11. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory
 
 # NixOS Commands
 ## Rebuild
