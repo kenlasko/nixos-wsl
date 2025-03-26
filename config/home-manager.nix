@@ -8,7 +8,6 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     ansible             # Automatic package installation
-    git                 # Git version control
     gnupg               # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets

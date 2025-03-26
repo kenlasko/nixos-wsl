@@ -28,8 +28,8 @@
           { 
             programs.nix-ld.dev.enable = true; 
           }
+          ./config    # This contains several other .nix configs
           sops-nix.nixosModules.sops
-          ./config
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
