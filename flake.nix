@@ -44,11 +44,6 @@
           }
           # Inline the settings from your original configuration.nix
           ({ pkgs, ... }: {
-            environment.systemPackages = with pkgs; [
-              sops
-              wget
-            ];
-
             nix.gc = {
               automatic = true;
               dates = "weekly";

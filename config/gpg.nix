@@ -8,9 +8,4 @@
     enableBashIntegration = true;
     pinentryPackage = pkgs.pinentry-curses;
   };
-
-  # Ensure pinentry is globally available
-#   environment.systemPackages = with pkgs; [
-#     pinentry
-#   ];
 }
