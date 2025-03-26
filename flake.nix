@@ -29,7 +29,6 @@
             programs.nix-ld.dev.enable = true; 
           }
           sops-nix.nixosModules.sops
-          ./configuration.nix
           ./config
           home-manager.nixosModules.home-manager
           {
@@ -43,6 +42,19 @@
             wsl.enable = true;
             wsl.defaultUser = "ken";
           }
+          # Inline the settings from your original configuration.nix
+          ({ pkgs, ... }: {
+            environment.systemPackages = with pkgs; [
+              git
+              wget
+            ];
+
+            nix.gc = {
+              automatic = true;
+              dates = "weekly";
+              options = "--delete-older-than 1w";
+            };
+          })
         ];
       };
     };
