@@ -38,6 +38,13 @@
             wsl.enable = true;
             wsl.defaultUser = "ken";
           }
+          # For WSL compatibility for VSCode Remote
+          {
+            programs.nix-ld = {
+              enable = true;
+              package = inputs.nixpkgs-stable.lib.pkgs.nix-ld-rs;
+            };
+          }
         ];
       };
     };
