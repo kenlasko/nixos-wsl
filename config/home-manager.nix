@@ -25,6 +25,11 @@
     OMNICONFIG = "~/.config/omni/config";
   };
 
+  programs.nix-ld = {
+    enable = true;
+    package = pkgs.nix-ld-rs; # only for NixOS 24.05
+  };
+
   programs.bash = {
     enable = true;
     enableCompletion = true;
