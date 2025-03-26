@@ -29,6 +29,8 @@ sudo nixos-rebuild switch
 ```
 4. Exit and re-login. Should automatically login as `ken`
 
+---
+
 > [!WARNING]
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
