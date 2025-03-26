@@ -1,9 +1,6 @@
 { pkgs
 , ...
 }: {
-  # Improved support for YubiKey
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
   home-manager.users.ken.programs.gpg = {
     enable = true;
   };

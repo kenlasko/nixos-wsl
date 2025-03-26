@@ -5,6 +5,7 @@
 , ...
 }: {
   imports = [
+    ./bash.nix
     ./docker.nix
     ./git.nix
     ./gpg.nix
