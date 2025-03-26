@@ -25,6 +25,18 @@
     OMNICONFIG = "~/.config/omni/config";
   };
 
+  # Start VSCode Server which makes it easy to integrate with VSCode on Windows
+  # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"
+  #       to get the sha256 value
+  imports = [
+    "${fetchTarball {
+      url = "https://github.com/msteen/nixos-vscode-server/tarball/master";
+      sha256 = "09j4kvsxw1d5dvnhbsgih0icbrxqv90nzf0b589rb5z6gnzwjnqf";
+    }}/modules/vscode-server/home.nix"
+  ];
+
+  services.vscode-server.enable = true;
+
   programs.bash = {
     enable = true;
     enableCompletion = true;
