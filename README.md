@@ -6,7 +6,7 @@ This is my build process for NixOS running in Windows WSL, which is basically a 
 - Building multi-arch Docker images for my UCDialplans.com website
 - Support for VSCode Remote
 
-It uses H[ome Manager](https://nix-community.github.io/home-manager/) and [flakes](https://nixos-and-flakes.thiscute.world/) for maximum flexibility. 
+It uses [Home Manager](https://nix-community.github.io/home-manager/) and [flakes](https://nixos-and-flakes.thiscute.world/) for maximum flexibility. 
 
 I am still very new at this, so there could be lots of room for improvement!
 
