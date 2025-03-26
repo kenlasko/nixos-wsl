@@ -8,7 +8,6 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     ansible             # Automatic package installation
-    docker              # Open source project to pack, ship and run any application as a lightweight container
     git                 # Git version control
     gnupg               # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
     jq                  # Lightweight and flexible command-line JSON processor
@@ -45,6 +44,7 @@
       source <(cilium completion bash)
     '';
     bashrcExtra = ''
+      export TZ="America/Toronto"
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       complete -F __start_kubectl k
     '';

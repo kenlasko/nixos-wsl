@@ -5,6 +5,7 @@
 , ...
 }: {
   imports = [
+    ./docker.nix
     ./git.nix
     ./k8s.nix
   ];
