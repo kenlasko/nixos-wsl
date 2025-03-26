@@ -67,15 +67,23 @@ chmod u+x nixos/scripts/copy-config.sh
 sudo nixos-rebuild switch --recreate-lock-file --flake .
 ```
 ## Delete all historical versions older than 7 days
+```
 sudo nix profile wipe-history --older-than 7d --profile /nix/var/nix/profiles/system
+```
 
-## Wiping history won't garbage collect the unused packages, you need to run the gc command manually as root:
+## Garbage Collection
+```
 sudo nix-collect-garbage --delete-old
-
-## Due to the following issue, you need to run the gc command as per user to delete home-manager's historical data:
 nix-collect-garbage --delete-old
+```
 
 # Troubleshooting
+## Opening terminal throws error
+Edit the terminal profile and set the path to:
+```
+C:\WINDOWS\system32\wsl.exe -d nixos
+```
+
 ## Git Push from VSCode fails
 If you get `Host key verification failed. fatal: Could not read from remote repository.` when trying to push a git update to the remote repo, try this:
 1. From VSCode, open a terminal and type:

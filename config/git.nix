@@ -14,11 +14,6 @@
 
       extraConfig = {
         init.defaultBranch = "main";
-#        pull.ff = "only";
-#        push = {
-#          default = "current";
-#          autoSetupRemote = true;
-#        };
         url = {
           "ssh://git@github.com" = {
             insteadOf = "https://github.com";

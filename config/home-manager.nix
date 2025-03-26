@@ -20,6 +20,7 @@
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "24.11";
 
+  # May or may not be required for omnicfg
   # home.sessionVariables = rec {
   #   OMNICONFIG = "~/.config/omni/config";
   # };
@@ -49,7 +50,6 @@
       complete -F __start_kubectl k
     '';
 
-    # set some aliases, feel free to add more or remove some
     shellAliases = {
       cilium = "cilium --namespace=cilium";
       k = "kubectl";
