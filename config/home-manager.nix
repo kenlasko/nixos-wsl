@@ -21,9 +21,9 @@
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "24.11";
 
-  home.sessionVariables = rec {
-    OMNICONFIG = "~/.config/omni/config";
-  };
+  # home.sessionVariables = rec {
+  #   OMNICONFIG = "~/.config/omni/config";
+  # };
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows
   # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"

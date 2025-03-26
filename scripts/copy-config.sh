@@ -37,3 +37,7 @@ if [ -f ~/k8s/ansible/resources/hosts ]; then
 else
     echo "No Ansible hosts file found. Clone the kenlasko/k8s repo to get this file"
 fi
+
+# Delete the no longer needed nixos home directory
+echo "Deleting /home/nixos directory"
+sudo rm -rf /home/nixos

@@ -59,7 +59,6 @@ sudo ln -s ~/nixos /etc/nixos
 ```
 chmod u+x nixos/scripts/copy-config.sh
 ./nixos/scripts/copy-config.sh
-
 ```
 
 # NixOS Commands
