@@ -1,4 +1,4 @@
-# Manage with nix-shell -p sops --run "sops configuration/secrets.yaml"
+# Manage with nix-shell -p sops --run "sops config/secrets.yaml"
 {
   sops = {
     defaultSopsFile = ./secrets.yaml;

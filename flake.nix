@@ -45,7 +45,7 @@
           # Inline the settings from your original configuration.nix
           ({ pkgs, ... }: {
             environment.systemPackages = with pkgs; [
-              git
+              sops
               wget
             ];
 
