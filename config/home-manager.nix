@@ -21,6 +21,10 @@
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "24.11";
 
+  home.sessionVariables = rec {
+    OMNICONFIG = "~/.config/omni/config";
+  };
+
   programs.bash = {
     enable = true;
     enableCompletion = true;
