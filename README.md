@@ -28,6 +28,10 @@ sudo cp -r nixos/* /etc/nixos
 sudo nixos-rebuild switch
 ```
 4. Exit and re-login. Should automatically login as `ken`
+
+> [!WARNING]
+> From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
+
 5. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
 ```
 chmod 400 ~/.ssh/id_rsa
@@ -51,11 +55,11 @@ git clone git@github.com:kenlasko/pxeboot.git
 sudo rm -rf /etc/nixos/
 sudo ln -s ~/nixos /etc/nixos
 ```
-8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image. THIS IS SPECIFIC TO MY DEPLOYMENT AND WON'T APPLY TO YOU
+8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image. 
 ```
 ./nixos/scripts/copy-config.sh
 ```
-9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory for use with Sealed Secrets. AGAIN, THIS IS SPECIFIC TO MY DEPLOYMENT AND WON'T APPLY TO YOU
+9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory for use with Sealed Secrets.
 
 # NixOS Handy Commands
 ## Rebuild
