@@ -8,7 +8,6 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     ansible             # Automatic package installation
-    gnupg               # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
     terraform           # Tool for building, changing, and versioning infrastructure safely and efficiently
@@ -54,6 +53,12 @@
       k = "kubectl";
       tf = "terraform";
     };
+  };
+
+  programs.gpg.agent = {
+    enable = true;
+    defaultCacheTtl = 600;
+    enableSshSupport = true;
   };
 
   # Let home Manager install and manage itself.
