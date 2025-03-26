@@ -6,6 +6,8 @@ This is my build process for NixOS running in Windows WSL, which is basically a 
 - Building multi-arch Docker images for my UCDialplans.com website
 - Support for VSCode Remote
 
+I am still very new at this, so there could be lots of room for improvement!
+
 # Installation
 1. Install NixOS in WSL by downloading and double-clicking the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL
 2. Paste the following text into `%USERPROFILE%\.wslconfig` and save:
