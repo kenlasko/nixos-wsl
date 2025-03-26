@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nix-ld.url = "github:Mic92/nix-ld";
     sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -12,7 +13,7 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-stable, nixos-wsl, sops-nix, home-manager, ... }: {
+  outputs = inputs@{ nixpkgs, nixpkgs-stable, nixos-wsl, nix-ld, sops-nix, home-manager, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -23,6 +24,10 @@
         };
 
         modules = [
+          nix-ld.nixosModules.nix-ld
+          { 
+            programs.nix-ld.dev.enable = true; 
+          }
           sops-nix.nixosModules.sops
           ./configuration.nix
           ./config
@@ -38,13 +43,6 @@
             wsl.enable = true;
             wsl.defaultUser = "ken";
           }
-          # For WSL compatibility for VSCode Remote
-          (pkgs: {
-            programs.nix-ld = {
-              enable = true;
-              package = pkgs.nix-ld-rs;
-            };
-          })
         ];
       };
     };
