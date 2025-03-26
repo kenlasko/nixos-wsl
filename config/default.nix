@@ -10,5 +10,6 @@
     ./git.nix
     ./gpg.nix
     ./k8s.nix
+    ./sops.nix
   ];
 }

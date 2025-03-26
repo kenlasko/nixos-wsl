@@ -1,0 +1,7 @@
+keys:
+  - &ssh_ken 564A6B11CD96E3C24BD4FDB4A09E0B814F529F78
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *admin_ken
