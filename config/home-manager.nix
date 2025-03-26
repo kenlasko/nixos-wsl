@@ -55,12 +55,6 @@
     };
   };
 
-  programs.gpg.agent = {
-    enable = true;
-    defaultCacheTtl = 600;
-    enableSshSupport = true;
-  };
-
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
