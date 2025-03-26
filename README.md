@@ -51,13 +51,13 @@ git clone git@github.com:kenlasko/pxeboot.git
 sudo rm -rf /etc/nixos/
 sudo ln -s ~/nixos /etc/nixos
 ```
-8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image
+8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image. THIS IS SPECIFIC TO MY DEPLOYMENT AND WON'T APPLY TO YOU
 ```
 ./nixos/scripts/copy-config.sh
 ```
-9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory
+9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory for use with Sealed Secrets. AGAIN, THIS IS SPECIFIC TO MY DEPLOYMENT AND WON'T APPLY TO YOU
 
-# NixOS Commands
+# NixOS Handy Commands
 ## Rebuild
 ```
 sudo nixos-rebuild switch --recreate-lock-file --flake .
