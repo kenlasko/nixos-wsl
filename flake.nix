@@ -39,12 +39,12 @@
             wsl.defaultUser = "ken";
           }
           # For WSL compatibility for VSCode Remote
-          { pkgs, ... }: {
+          (pkgs: {
             programs.nix-ld = {
               enable = true;
-              package = pkgs.nix-ld-rs;  # Now pkgs is correctly defined in scope
+              package = pkgs.nix-ld-rs;
             };
-          }
+          })
         ];
       };
     };
