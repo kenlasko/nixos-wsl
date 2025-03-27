@@ -34,7 +34,7 @@ sudo nixos-rebuild switch
 > [!WARNING]
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
-5. Copy age key (`keys.txt`) from secret store to `/home/ken/.config/sops/age/keys.txt`. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring SOPS)
+5. Copy age key (`keys.txt`) from secret store to `/home/ken/.config/sops/age/keys.txt`. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
 
 5. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
 ```
