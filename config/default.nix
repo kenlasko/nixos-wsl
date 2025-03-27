@@ -11,6 +11,6 @@
     ./gpg.nix
     ./k8s.nix
     ./sops.nix
-    ./ssh.nix
+    #./ssh.nix
   ];
 }

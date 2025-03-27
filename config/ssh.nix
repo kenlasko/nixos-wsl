@@ -2,16 +2,8 @@
 
 let
   # Decrypt the SSH key using sops-nix
-  decryptedKey = pkgs.sops-nix.secrets."secrets/id_rsa".text;
+  decryptedKey = config.sops.secrets."secrets/id_rsa.sops.yaml".text;
 in
 {
-  services.ssh-agent = {
-    enable = true;  # Start ssh-agent at login
-    identities = [
-      {
-        privateKey = decryptedKey;  # Load the decrypted key into ssh-agent
-        user = "ken";               # Adjust as necessary
-      }
-    ];
-  };
+  # Enable the SSH agent
 }
