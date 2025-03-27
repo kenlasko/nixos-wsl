@@ -63,7 +63,6 @@ sudo ln -s ~/nixos /etc/nixos
 ```
 ./nixos/scripts/copy-config.sh
 ```
-9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory for use with Sealed Secrets.
 
 # Configuring SOPS
 SOPS allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. Here's the configuration steps for first-time users:
