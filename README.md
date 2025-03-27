@@ -28,7 +28,7 @@ default = ken
 3. Copy the SOPS `keys.txt` into what will be the default user's `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
 ```
 sudo mkdir -p /home/ken/.config/sops/age
-sudo chmod 777 -R /home/ken
+sudo chmod 777 -R /home/ken  # This will get reset to more secure defaults when NixOS creates the user
 # Copy the keys.txt file using whatever method works
 sudo nano /home/ken/.config/sops/age/keys.txt
 ```
@@ -42,6 +42,12 @@ sudo nixos-rebuild switch
 ```
 
 5. Exit and re-login. Should automatically login as `ken`
+
+6. Reset the permissions on `.config` and `.ssh` directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
+```
+# Fix permissions for the .ssh and .config directories
+sudo chown -R ${USER}:users .ssh .config
+```
 
 ---
 
