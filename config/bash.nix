@@ -1,7 +1,8 @@
 { pkgs
+, config
 , ...
 }: {
-  home-manager.users.ken.programs.bash = {
+  programs.bash = {
     enable = true;
     enableCompletion = true;
     initExtra = ''
