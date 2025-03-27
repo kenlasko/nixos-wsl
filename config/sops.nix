@@ -2,6 +2,10 @@
 {
   sops = {
     defaultSopsFile = ./secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/ken/.config/sops/age/keys.txt";
 
+    secrets.example-key = {};
+    secrets."myservice/my_subdir/my_secret" = {};
   };
 }
