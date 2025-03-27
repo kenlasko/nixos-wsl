@@ -34,6 +34,8 @@ sudo nixos-rebuild switch
 > [!WARNING]
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
+5. Copy age key (`keys.txt`) from secret store to `/home/ken/.config/sops/age/keys.txt`. For instructions on setting up SOPS and age, see 
+
 5. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
 ```
 chmod 400 ~/.ssh/id_rsa
@@ -62,6 +64,17 @@ sudo ln -s ~/nixos /etc/nixos
 ./nixos/scripts/copy-config.sh
 ```
 9. Finally, copy the `sealed-secret-signing-key.crt` into the user's home directory for use with Sealed Secrets.
+
+# Configuring SOPS
+SOPS allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. Here's the configuration steps for first-time users:
+
+1. Generating age key. Once done, make sure to save `keys.txt` somewhere secure and NOT in the Git repo.
+```
+mkdir -p ~/.config/sops/age
+export NIX_CONFIG="experimental-features = nix-command flakes"
+nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt  # Generate private key
+```
+2. 
 
 # NixOS Handy Commands
 ## Rebuild

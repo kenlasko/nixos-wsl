@@ -5,7 +5,6 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/ken/.config/sops/age/keys.txt";
 
-    # secrets.example_key = {};
-    # secrets."myservice/my_subdir/my_secret" = {};
+    secrets.sshkey = {};
   };
 }
