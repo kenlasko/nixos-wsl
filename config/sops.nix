@@ -8,7 +8,12 @@
     secrets.sshkey = {};
     secrets.sealed-secrets-signing-key = {
         owner = "ken";
-        path = "/home/ken/sealed-secrets-signing-key.crt";
+    };
+    secrets."global-sealed-secrets-key.yaml" = {
+        owner = "ken";
+    };
+    secrets."default-sealing-key.yaml" = {
+        owner = "ken";
     };
   };
 }
