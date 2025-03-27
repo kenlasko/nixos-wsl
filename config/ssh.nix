@@ -12,6 +12,7 @@
       Host github.com
         IdentityFile ~/.ssh/github_rsa
         AddKeysToAgent yes
+        StrictHostKeyChecking no
     '';
   };
 }

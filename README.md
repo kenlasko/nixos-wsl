@@ -28,7 +28,7 @@ default = ken
 3. Copy the SOPS `keys.txt` into what will be the default user's `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
 ```
 sudo mkdir -p /home/ken/.config/sops/age
-chmod 777 -R /home/ken
+sudo chmod 777 -R /home/ken
 # Copy the keys.txt file using whatever method works
 sudo nano /home/ken/.config/sops/age/keys.txt
 ```

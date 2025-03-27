@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Fix permissions for the .ssh and .config directories
+sudo chown -R ken .ssh .config
+sudo chgrp -R users .ssh .config
+
 # Get the WSL host path for the logged-in user
 HOSTPATH=$(echo "$WSLPATH" | grep -oP '(/mnt/\w/Users/\w+)' | head -1)
 
