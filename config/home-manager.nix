@@ -18,10 +18,36 @@
     wslu                # Windows Subsystem for Linux utilities
   ];
 
-  # May or may not be required for omnicfg
-  # home.sessionVariables = rec {
-  #   OMNICONFIG = "~/.config/omni/config";
-  # };
+  home.file.talosconfig = {
+    enable = true;
+    target = ".talos/config";
+    text = ''
+      context: onprem-omni
+      contexts:
+          onprem-omni:
+              endpoints:
+                  - https://omni.ucdialplans.com/
+              auth:
+                  siderov1:
+                      identity: ken.lasko@gmail.com
+              cluster: home
+      '';
+  };
+
+  home.file.omniconfig = {
+    enable = true;
+    target = ".config/omni/config";
+    text = ''
+      contexts:
+          default:
+              url: https://omni.ucdialplans.com/
+              auth:
+                  siderov1:
+                      identity: ken.lasko@gmail.com
+      context: default
+      '';
+  };
+
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows
   # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"

@@ -8,7 +8,6 @@
     ./bash.nix
     ./docker.nix
     ./git.nix
-  #  ./gpg.nix
     ./k8s.nix
     ./sops.nix
     ./ssh.nix

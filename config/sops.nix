@@ -10,6 +10,11 @@
         path = "/home/ken/.ssh/github_rsa";
         mode = "0400";
     };
+    secrets.kubeconfig = {
+        owner = "ken";
+        path = "/home/ken/.kube/config";
+        mode = "0600";
+    };
     secrets.sealed-secrets-signing-key = {
         owner = "ken";
     };
