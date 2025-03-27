@@ -13,7 +13,7 @@
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
     sops                # Simple and flexible tool for managing secrets
-    terraform           # Tool for building, changing, and versioning infrastructure safely and efficiently
+    #terraform           # Tool for building, changing, and versioning infrastructure safely and efficiently
     wget                # A network utility to retrieve files from the Web
     wslu                # Windows Subsystem for Linux utilities
   ];

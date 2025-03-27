@@ -13,36 +13,41 @@ I am still very new at this, so there could be lots of room for improvement!
 # Prerequisites
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
 
+You will have to modify the `.nix` files to change any references to `ken` (unless you happen to be named Ken). You will also have to generate a `secrets.yaml` with any relevant secrets, and modify the [sops.nix](config/sops.nix), [.sops.yaml][.sops.yaml] and any other files where those secrets will be referenced. Read [Configuring SOPS](#Configuring-SOPS) for details.
+
+
 # Installation
-1. Install NixOS in WSL by downloading and double-clicking the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL
-2. Paste the following text into `%USERPROFILE%\.wslconfig` and save:
+1. Install NixOS in WSL by downloading the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL and double-clicking the `nixos.wsl` file.
+
+2. Paste the following text into your local host's `%USERPROFILE%\.wslconfig` and save (replace with your desired name):
 ```
 [user]
 default = ken
 ```
-3. Clone the NixOS repo and rebuild the OS
+
+3. Copy the SOPS `keys.txt` into what will be the default user's `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
+```
+sudo mkdir -p /home/ken/.config/sops/age
+chmod 777 -R /home/ken
+# Copy the keys.txt file using whatever method works
+sudo nano /home/ken/.config/sops/age/keys.txt
+```
+
+4. Clone the NixOS repo and rebuild the OS
 ```
 export NIX_CONFIG="experimental-features = nix-command flakes"
-nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos
-sudo cp -r nixos/* /etc/nixos
+nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git ~/nixos
+sudo cp -r ~/nixos/* /etc/nixos
 sudo nixos-rebuild switch
 ```
-4. Exit and re-login. Should automatically login as `ken`
+
+5. Exit and re-login. Should automatically login as `ken`
 
 ---
 
 > [!WARNING]
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
-5. Copy age key (`keys.txt`) from secret store to `/home/ken/.config/sops/age/keys.txt`. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
-
-5. Copy SSH key from secret store to `~/.ssh/id_rsa`. Then setup for Git access
-```
-chmod 400 ~/.ssh/id_rsa
-# Start ssh-agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-```
 6.  Download all necessary repos
 ```
 git clone git@github.com:kenlasko/nixos-wsl.git nixos
@@ -54,11 +59,13 @@ git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
 ```
-7. Symlink `/etc/nixos` to Github synced folder
+
+7. Symlink `/etc/nixos` to Github synced folder. Done so we can easily save config in Git
 ```
 sudo rm -rf /etc/nixos/
 sudo ln -s ~/nixos /etc/nixos
 ```
+
 8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image. 
 ```
 ./nixos/scripts/copy-config.sh
@@ -75,11 +82,12 @@ mkdir -p ~/.config/sops/age
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt  # Generate private key
 ```
-2. Run the following command to open a default `secrets.yaml`. Add secrets here and save. SOPS will encrypt the contents automatically
+2. Edit [.sops.yaml](.sops.yaml) and replace the primary key with the public key from the new `keys.txt`
+3. Run the following command to open a default `secrets.yaml`. Add secrets here and save. SOPS will encrypt the contents automatically
 ```
 sops ~/nixos/config/secrets.yaml
 ```
-3. Rebuild the NixOS system to apply the changes
+4. Rebuild the NixOS system to apply the changes
 ```
 sudo nixos-rebuild switch
 ```
