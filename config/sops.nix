@@ -6,5 +6,9 @@
     age.keyFile = "/home/ken/.config/sops/age/keys.txt";
 
     secrets.sshkey = {};
+    secrets."sealed-secrets-signing-key.crt" = {
+        owner = "ken";
+        path = "/home/ken/sealed-secrets-signing-key.crt";
+    };
   };
 }
