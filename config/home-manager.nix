@@ -4,6 +4,8 @@
   nixpkgs.config.allowUnfree = true;
   home.username = "ken";
   home.homeDirectory = "/home/ken";
+  home.enableNixpkgsReleaseCheck = false;
+  home.stateVersion = "24.11";
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -15,9 +17,6 @@
     wget                # A network utility to retrieve files from the Web
     wslu                # Windows Subsystem for Linux utilities
   ];
-
-  home.enableNixpkgsReleaseCheck = false;
-  home.stateVersion = "24.11";
 
   # May or may not be required for omnicfg
   # home.sessionVariables = rec {

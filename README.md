@@ -65,11 +65,11 @@ sudo ln -s ~/nixos /etc/nixos
 ```
 
 # Configuring SOPS
-SOPS allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. All encrypted secrets are stored in [~/config/secrets.yaml](/config/secrets.yaml)
+SOPS allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. All encrypted secrets are stored in [~/config/secrets.yaml](/config/secrets.yaml).
 
 Here's the configuration steps for first-time users:
 
-1. Generating age key. Once done, make sure to save `keys.txt` somewhere secure and NOT in the Git repo.
+1. Generating age key. Once done, make sure to save `~/.config/sops/age/keys.txt` somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt the files.
 ```
 mkdir -p ~/.config/sops/age
 export NIX_CONFIG="experimental-features = nix-command flakes"

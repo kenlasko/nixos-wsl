@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 # let
 #   # Decrypt the SSH key using sops-nix
@@ -6,4 +6,12 @@
 # in
 {
   # Enable the SSH agent
+  programs.ssh = {
+    startAgent = true;  # Ensure SSH agent is running
+    extraConfig = ''
+      Host github.com
+        IdentityFile ~/.ssh/github_rsa
+        AddKeysToAgent yes
+    '';
+  };
 }
