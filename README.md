@@ -13,7 +13,11 @@ I am still very new at this, so there could be lots of room for improvement!
 # Prerequisites
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
 
-You will have to modify the `.nix` files to change any references to `ken` (unless you happen to be named Ken). You will also have to generate a `secrets.yaml` with any relevant secrets, and modify the [sops.nix](config/sops.nix), [.sops.yaml](.sops.yaml) and any other files where those secrets will be referenced. Read [Configuring SOPS](#Configuring-SOPS) for details.
+This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt secret information. Read [Configuring SOPS](#Configuring-SOPS) for details. You will require your own unique versions of the following files:
+- `keys.txt` for secure secrets encryption using SOPS. 
+- [.sops.yaml](.sops.yaml) for defining the SOPS configuration. 
+- `secrets.yaml` for securely storing secrets. 
+- [sops.nix](config/sops.nix) for referencing secrets in NixOS
 
 
 # NixOS Base Installation
@@ -42,7 +46,7 @@ default = ken
 wsl -d <Name of distribution ie NixOS> --cd ~
 ```
 
-2. Copy your SOPS `keys.txt` into what will be the default user's `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
+2. Copy your SOPS `keys.txt` into what will be the default users `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
 ```
 sudo mkdir -p /home/ken/.config/sops/age
 sudo chown -R nixos:users /home/ken
@@ -81,7 +85,7 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 ```
 
 # Configuring SOPS
-SOPS allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. All encrypted secrets are stored in [~/config/secrets.yaml](/config/secrets.yaml).
+[SOPS](https://github.com/Mic92/sops-nix) allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. All encrypted secrets are stored in [~/config/secrets.yaml](/config/secrets.yaml).
 
 Here's the configuration steps for first-time users. This assumes a clean NixOS distribution with no prior configuration:
 
