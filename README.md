@@ -13,7 +13,7 @@ I am still very new at this, so there could be lots of room for improvement!
 # Prerequisites
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
 
-You will have to modify the `.nix` files to change any references to `ken` (unless you happen to be named Ken). You will also have to generate a `secrets.yaml` with any relevant secrets, and modify the [sops.nix](config/sops.nix), [.sops.yaml][.sops.yaml] and any other files where those secrets will be referenced. Read [Configuring SOPS](#Configuring-SOPS) for details.
+You will have to modify the `.nix` files to change any references to `ken` (unless you happen to be named Ken). You will also have to generate a `secrets.yaml` with any relevant secrets, and modify the [sops.nix](config/sops.nix), [.sops.yaml](.sops.yaml) and any other files where those secrets will be referenced. Read [Configuring SOPS](#Configuring-SOPS) for details.
 
 
 # Installation
