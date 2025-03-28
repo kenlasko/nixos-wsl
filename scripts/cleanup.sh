@@ -1,4 +1,14 @@
 #!/bin/sh
+echo "Cloning private repos"
+cd ~
+git clone git@github.com:kenlasko/nixos-wsl.git nixos
+git clone git@github.com:kenlasko/k8s.git
+git clone git@github.com:kenlasko/k8s-lab.git
+git clone git@github.com:kenlasko/k8s-cloud.git
+git clone git@github.com:kenlasko/omni.git
+git clone git@github.com:kenlasko/docker.git
+git clone git@github.com:kenlasko/omni-public.git
+git clone git@github.com:kenlasko/pxeboot.git
 
 echo "Fixing permissions on .ssh, .config, and .kube directories"
 sudo chown -R ${USER}:users .ssh .config .kube

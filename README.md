@@ -33,7 +33,11 @@ sudo chown -R nixos:users /home/ken
 nano /home/ken/.config/sops/age/keys.txt
 ```
 
-4. Rebuild the OS using the Github repo as a source
+4. Rebuild the OS using the Github repo as a source. 
+
+> [!WARNING]
+> You will probably not want to do this before modifying some key files. Instead, clone the repo into `/etc/nixos` and make any necessary changes: `nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos && sudo rm -rf /etc/nixos/* && sudo cp -r nixos/* /etc/nixos`
+
 ```
 sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl
 ```
@@ -50,20 +54,7 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 > [!WARNING]
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
-6.  Download all necessary repos
-```
-cd ~
-git clone git@github.com:kenlasko/nixos-wsl.git nixos
-git clone git@github.com:kenlasko/k8s.git
-git clone git@github.com:kenlasko/k8s-lab.git
-git clone git@github.com:kenlasko/k8s-cloud.git
-git clone git@github.com:kenlasko/omni.git
-git clone git@github.com:kenlasko/docker.git
-git clone git@github.com:kenlasko/omni-public.git
-git clone git@github.com:kenlasko/pxeboot.git
-```
-
-7. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform cleanup tasks. 
+7. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform final setup and cleanup tasks. 
 ```
 ~/nixos/scripts/cleanup.sh
 ```
@@ -71,23 +62,56 @@ git clone git@github.com:kenlasko/pxeboot.git
 # Configuring SOPS
 SOPS allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. All encrypted secrets are stored in [~/config/secrets.yaml](/config/secrets.yaml).
 
-Here's the configuration steps for first-time users:
+Here's the configuration steps for first-time users. This assumes a clean NixOS distribution with no prior configuration:
 
-1. Generating age key. Once done, make sure to save `~/.config/sops/age/keys.txt` somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt the files.
+1. Generating age private key. 
 ```
 mkdir -p ~/.config/sops/age
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt  # Generate private key
 ```
-2. Edit [.sops.yaml](.sops.yaml) and replace the primary key with the public key from the new `keys.txt`
-3. Run the following command to open a default `secrets.yaml`. Add secrets here and save. SOPS will encrypt the contents automatically
+2. Open `.config/sops/age/keys.txt` and copy the public key value. Save `~/.config/sops/age/keys.txt` somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt files encrypted with SOPS.
 ```
-sops ~/nixos/config/secrets.yaml
+# created: 2025-03-28T12:57:52Z
+# public key: age1jmeardw5auuj5m6yll49cpxtvge8cklltk9tlmy24xdre3wal4dq5vek65    <--- Copy this (but without the `# public key:` part)
+AGE-SECRET-KEY-1QCX332PRGV7GA6R8MJZ7CDU7S9Y5G7J0FU8U0L9PL5DUV835R7YQC7DDU5
 ```
-4. Rebuild the NixOS system to apply the changes
+3. Create a file called `.sops.yaml` using the template below, and paste the public key into it
 ```
-sudo nixos-rebuild switch
+keys:
+  - &primary age1jmeardw5auuj5m6yll49cpxtvge8cklltk9tlmy24xdre3wal4dq5vek65
+creation_rules:
+  - path_regex: config/secrets.yaml$
+    key_groups:
+    - age:
+      - *primary
 ```
+
+4. Edit [.sops.yaml](.sops.yaml) and replace the primary key with the public key from the new `keys.txt`
+5. Make a temporary `config` directory
+```
+mkdir config
+```
+6. Run the following command to open a nix shell with `sops` in it. 
+
+```
+export NIX_CONFIG="experimental-features = nix-command flakes"
+nix shell nixpkgs#sops 
+```
+
+7. Create a default `secrets.yaml` by running the below command. SOPS will create a default `secrets.yaml` with some sample content. Remove the sample content, add all desired secrets and save. SOPS will encrypt the contents automatically using the `keys.txt` created earlier.
+```
+sops --config .sops.yaml config/secrets.yaml
+```
+8. Verify that `secrets.yaml` is encrypted by running the below command:
+```
+cat config/secrets.yaml
+```
+9. Save all modified content:
+- `~/.config/sops/age/keys.txt` - save somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt files encrypted with SOPS.
+- `~/.sops.yaml` - this will replace the `.sops.yaml` at the root of the repo
+- `config/secrets.yaml` - this will replace the `config/secrets.yaml` in the repo
+
 
 # NixOS Handy Commands
 ## Full Rebuild
