@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# Fix permissions for the .ssh and .config directories
-echo "Fixing permissions for .ssh and .config directories"
-sudo chown -R ${USER}:users .ssh .config
-
 # Get the Ansible hosts file from the k8s repo
 if [ -f ~/k8s/ansible/resources/hosts ]; then
     [ ! -d /etc/ansible ] && sudo mkdir -p /etc/ansible

@@ -14,6 +14,7 @@
       export BROWSER=wslview
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       complete -F __start_kubectl k
+      export USERNAMETEST="${config.home.username}"
     '';
 
     shellAliases = {
