@@ -40,6 +40,11 @@ sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl
 
 5. Exit and re-login. Should automatically login as `ken`
 
+6. Reset the permissions on .config and .ssh directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
+```
+# Fix permissions for the .ssh .config and .kube directories
+sudo chown -R ${USER}:users .ssh .config .kube
+```
 ---
 
 > [!WARNING]
@@ -57,13 +62,7 @@ git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
 ```
 
-7. Symlink `/etc/nixos` to Github synced folder. Done so we can easily save config in Git
-```
-sudo rm -rf /etc/nixos/
-sudo ln -s ~/nixos /etc/nixos
-```
-
-8. Run the [nixos/scripts/copy-config.sh](scripts/copy-config.sh) script to copy kubectl/talosctl/omnictl configurations from outside the image. 
+7. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform cleanup tasks. 
 ```
 ./nixos/scripts/copy-config.sh
 ```
