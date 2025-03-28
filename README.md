@@ -10,13 +10,14 @@ It uses [Home Manager](https://nix-community.github.io/home-manager/) and [flake
 
 I am still very new at this, so there could be lots of room for improvement!
 
+
 # Prerequisites
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
 
 This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt secret information. Read [Configuring SOPS](#Configuring-SOPS) for details. You will require your own unique versions of the following files:
-- `keys.txt` for secure secrets encryption using SOPS. 
-- [.sops.yaml](.sops.yaml) for defining the SOPS configuration. 
-- `secrets.yaml` for securely storing secrets. 
+- `keys.txt` for secure secrets encryption using SOPS
+- [.sops.yaml](.sops.yaml) for defining the SOPS configuration
+- `secrets.yaml` for securely storing secrets
 - [sops.nix](config/sops.nix) for referencing secrets in NixOS
 
 
@@ -34,11 +35,6 @@ This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt sec
     wsl --import NixOS-Test c:\wsl\nixos-test "C:\Users\klasko\Downloads\nixos.wsl"
     ```
 
-3. Paste the following text into your local host's `%USERPROFILE%\.wslconfig` and save (replace with your desired name):
-```
-[user]
-default = ken
-```
 
 # NixOS Configuration
 1. Run NixOS, by either selecting it from your Windows Terminal interface (should be at the bottom), or by running the following command from your Windows Terminal:
@@ -83,6 +79,7 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 ```
 ~/nixos/scripts/cleanup.sh
 ```
+
 
 # Configuring SOPS
 [SOPS](https://github.com/Mic92/sops-nix) allows you to store secrets such as SSH keys and passwords securely in your Git repo, much like Sealed Secrets does for Kubernetes. SOPS utilizes `age` to encrypt the secrets. All encrypted secrets are stored in [~/config/secrets.yaml](/config/secrets.yaml).
