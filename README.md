@@ -2,12 +2,17 @@
 NixOS is a declarative OS that has a very similar philosophy to Kubernetes, where all configuration is declared in `.nix` files, and the OS will adjust to match that declaration.
 
 This is my build process for NixOS running in Windows WSL, which is basically a VM running NixOS. It uses [Home Manager](https://nix-community.github.io/home-manager/) and [flakes](https://nixos-and-flakes.thiscute.world/) for maximum flexibility.  It is **EXTREMELY** opinionated, in that the packages are relevant to my specific working environment, which is built around the following technologies:
-- kubectl - for managing Kubernetes resources
-- talosctl - for managing Talos-based machines used for my Kubernetes clusters
-- omnictl - for managing my Kubernetes clusters
-- kubeseal - for secure online storage of Kubernetes secrets
-- docker - for building multi-arch Docker images, and occasional tests of new containers
-- support for VSCode Remote
+- [kubectl](https://github.com/kubernetes/kubectl) - for managing Kubernetes resources
+- [talosctl](https://github.com/siderolabs/talos/) - for managing Talos-based machines used for my Kubernetes clusters
+- [omnictl](https://github.com/siderolabs/omni) - for managing my Kubernetes clusters
+- [docker](https://docs.docker.com/) - for building multi-arch Docker images, and occasional tests of new containers
+- [support for VSCode Remote](https://github.com/nix-community/nixos-vscode-server)
+- Additional supporting tools such as 
+    - [K9S](https://github.com/derailed/k9s) - kubectl TUI
+    - [kubeseal](https://github.com/bitnami-labs/sealed-secrets) - for secure online storage of Kubernetes secrets
+    - [cilium-cli](https://github.com/cilium/cilium) - for managing/troubleshooting Cilium networking
+    - [kubent](https://github.com/doitintl/kube-no-trouble) - for checking for Kubernetes upgrade issues
+    - [popeye](https://github.com/derailed/popeye) - Kubernetes resource linter
 
 Your needs will certainly differ from this, but it should give you a very good starting point. I am still very new at this, so there could be lots of room for improvement!
 
