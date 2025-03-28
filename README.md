@@ -40,10 +40,10 @@ sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl
 
 5. Exit and re-login. Should automatically login as `ken`
 
-6. Reset the permissions on .config and .ssh directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
+6. Reset the permissions on `.config`, `.ssh` and `.kube` directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
 ```
 # Fix permissions for the .ssh .config and .kube directories
-sudo chown -R ${USER}:users .ssh .config .kube
+sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 ```
 ---
 
@@ -52,6 +52,7 @@ sudo chown -R ${USER}:users .ssh .config .kube
 
 6.  Download all necessary repos
 ```
+cd ~
 git clone git@github.com:kenlasko/nixos-wsl.git nixos
 git clone git@github.com:kenlasko/k8s.git
 git clone git@github.com:kenlasko/k8s-lab.git
@@ -64,7 +65,7 @@ git clone git@github.com:kenlasko/pxeboot.git
 
 7. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform cleanup tasks. 
 ```
-./nixos/scripts/copy-config.sh
+~/nixos/scripts/cleanup.sh
 ```
 
 # Configuring SOPS
