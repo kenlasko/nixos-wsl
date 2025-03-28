@@ -1,14 +1,15 @@
 # Introduction
 NixOS is a declarative OS that has a very similar philosophy to Kubernetes, where all configuration is declared in `.nix` files, and the OS will adjust to match that declaration.
 
-This is my build process for NixOS running in Windows WSL, which is basically a VM running NixOS. It is designed for the following:
-- Managing Kubernetes clusters via `kubectl` along with supporting tools, such as `talosctl`, `omnictl`, etc
-- Building multi-arch Docker images for my UCDialplans.com website
-- Support for VSCode Remote
+This is my build process for NixOS running in Windows WSL, which is basically a VM running NixOS. It uses [Home Manager](https://nix-community.github.io/home-manager/) and [flakes](https://nixos-and-flakes.thiscute.world/) for maximum flexibility.  It is **EXTREMELY** opinionated, in that the packages are relevant to my specific working environment, which is built around the following technologies:
+- kubectl - for managing Kubernetes resources
+- talosctl - for managing Talos-based machines used for my Kubernetes clusters
+- omnictl - for managing my Kubernetes clusters
+- kubeseal - for secure online storage of Kubernetes secrets
+- docker - for building multi-arch Docker images, and occasional tests of new containers
+- support for VSCode Remote
 
-It uses [Home Manager](https://nix-community.github.io/home-manager/) and [flakes](https://nixos-and-flakes.thiscute.world/) for maximum flexibility. 
-
-I am still very new at this, so there could be lots of room for improvement!
+Your needs will certainly differ from this, but it should give you a very good starting point. I am still very new at this, so there could be lots of room for improvement!
 
 
 # Prerequisites
@@ -109,27 +110,26 @@ creation_rules:
       - *primary
 ```
 
-4. Edit [.sops.yaml](.sops.yaml) and replace the primary key with the public key from the new `keys.txt`
-5. Make a temporary `config` directory
+4. Make a temporary `config` directory
 ```
 mkdir config
 ```
-6. Run the following command to open a nix shell with `sops` in it. 
+5. Run the following command to open a nix shell with `sops` in it. 
 
 ```
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#sops 
 ```
 
-7. Create a default `secrets.yaml` by running the below command. SOPS will create a default `secrets.yaml` with some sample content. Remove the sample content, add all desired secrets and save. SOPS will encrypt the contents automatically using the `keys.txt` created earlier.
+6. Create a default `secrets.yaml` by running the below command. SOPS will create a default `secrets.yaml` with some sample content. Remove the sample content, add all desired secrets and save. SOPS will encrypt the contents automatically using the `keys.txt` created earlier.
 ```
 sops --config .sops.yaml config/secrets.yaml
 ```
-8. Verify that `secrets.yaml` is encrypted by running the below command:
+7. Verify that `secrets.yaml` is encrypted by running the below command:
 ```
 cat config/secrets.yaml
 ```
-9. Save all modified content:
+8. Save all modified content:
 - `~/.config/sops/age/keys.txt` - save somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt files encrypted with SOPS.
 - `~/.sops.yaml` - this will replace the `.sops.yaml` at the root of the repo
 - `config/secrets.yaml` - this will replace the `config/secrets.yaml` in the repo
