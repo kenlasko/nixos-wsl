@@ -14,7 +14,7 @@ This is my build process for NixOS running in Windows WSL, which is basically a 
     - [kubent](https://github.com/doitintl/kube-no-trouble) - for checking for Kubernetes upgrade issues
     - [popeye](https://github.com/derailed/popeye) - Kubernetes resource linter
 
-Your needs will certainly differ from this, but it should give you a very good starting point. I am still very new at this, so there could be lots of room for improvement!
+Your needs will certainly differ from this, but it should give you a very good starting point. I am still very new at this and there's a lot of nuances I don't fully understand, so there could be lots of room for improvement!
 
 
 # Prerequisites
