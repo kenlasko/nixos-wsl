@@ -16,16 +16,33 @@ You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](
 You will have to modify the `.nix` files to change any references to `ken` (unless you happen to be named Ken). You will also have to generate a `secrets.yaml` with any relevant secrets, and modify the [sops.nix](config/sops.nix), [.sops.yaml](.sops.yaml) and any other files where those secrets will be referenced. Read [Configuring SOPS](#Configuring-SOPS) for details.
 
 
-# Installation
-1. Install NixOS in WSL by downloading the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL and double-clicking the `nixos.wsl` file.
+# NixOS Base Installation
+1. Download the latest `nixos.wsl` from https://github.com/nix-community/NixOS-WSL 
 
-2. Paste the following text into your local host's `%USERPROFILE%\.wslconfig` and save (replace with your desired name):
+2. Install NixOS by either:
+    1. using default settings by double-clicking the downloaded `nixos.wsl` file.
+    2. if you already have NixOS, install a second distribution by running something like:
+    ```
+    wsl --import <Name-For-Distribution> c:\<location-to-put-image> <path-to-downloaded-nixos.wsl>
+    ```
+    Example:
+    ```
+    wsl --import NixOS-Test c:\wsl\nixos-test "C:\Users\klasko\Downloads\nixos.wsl"
+    ```
+
+3. Paste the following text into your local host's `%USERPROFILE%\.wslconfig` and save (replace with your desired name):
 ```
 [user]
 default = ken
 ```
 
-3. Copy the SOPS `keys.txt` into what will be the default user's `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
+# NixOS Configuration
+1. Run NixOS, by either selecting it from your Windows Terminal interface (should be at the bottom), or by running the following command from your Windows Terminal:
+```
+wsl -d <Name of distribution ie NixOS> --cd ~
+```
+
+2. Copy your SOPS `keys.txt` into what will be the default user's `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
 ```
 sudo mkdir -p /home/ken/.config/sops/age
 sudo chown -R nixos:users /home/ken
@@ -33,7 +50,7 @@ sudo chown -R nixos:users /home/ken
 nano /home/ken/.config/sops/age/keys.txt
 ```
 
-4. Rebuild the OS using the Github repo as a source. 
+3. Rebuild the OS using the Github repo as a source. 
 
 > [!WARNING]
 > You will probably not want to do this unless you are me. Instead, you should clone the repo into `/etc/nixos`:
