@@ -16,6 +16,6 @@
     popeye            # Kubernetes cluster resource sanitizer
     omnictl           # SideroLabs Omni CLI
     talosctl          # Talos Kubernetes CLI
-    # terraform         # Tool for building, changing, and versioning infrastructure safely and efficiently
+    terraform         # Tool for building, changing, and versioning infrastructure safely and efficiently
   ];
 }
