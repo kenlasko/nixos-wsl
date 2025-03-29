@@ -20,7 +20,7 @@
     shellAliases = {
       cilium = "cilium --namespace=cilium";
       k = "kubectl";
-      tf = "terraform";
+      tf = "tofu";
     };
   };
 }
