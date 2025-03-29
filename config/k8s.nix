@@ -15,7 +15,7 @@
     kubent            # Easily check your cluster for use of deprecated APIs
     popeye            # Kubernetes cluster resource sanitizer
     omnictl           # SideroLabs Omni CLI
+    opentofu          # Tool for building, changing, and versioning infrastructure safely and efficiently
     talosctl          # Talos Kubernetes CLI
-    terraform         # Tool for building, changing, and versioning infrastructure safely and efficiently
   ];
 }
