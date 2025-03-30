@@ -20,11 +20,11 @@
     };
     secrets."global-sealed-secrets-key.yaml" = {
         owner = "ken";
-        path = "/home/ken/global-sealed-secrets-key.yaml";
         mode = "0444";
     };
     secrets."default-sealing-key.yaml" = {
         owner = "ken";
+        mode = "0444";
     };
   };
 }
