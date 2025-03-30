@@ -9,6 +9,7 @@ git clone git@github.com:kenlasko/omni.git
 git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
+git clone git@github.com:kenlasko/k8s-bootstrap.git terraform
 
 echo "Fixing permissions on .ssh, .config, and .kube directories"
 sudo chown -R ${USER}:users .ssh .config .kube
