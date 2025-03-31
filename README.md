@@ -62,7 +62,8 @@ nano /home/ken/.config/sops/age/keys.txt
 > [!WARNING]
 > You will probably not want to do this unless you are me. Instead, you should clone the repo into `/etc/nixos`:
 > ```
-> `nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos && sudo rm -rf /etc/nixos/* && sudo cp -r nixos/* /etc/nixos`
+> export NIX_CONFIG="experimental-features = nix-command flakes"
+> nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos && sudo rm -rf /etc/nixos/* && sudo cp -r nixos/* /etc/nixos`
 > ``` 
 > and make any necessary changes to usernames (in `flake.nix`, `config/git.nix` and `config/home-manager.nix`) and secret references (in `config/sops.nix`) and replace `.sops.yaml` and `config/secrets.nix` with your own.
 

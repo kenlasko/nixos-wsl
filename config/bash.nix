@@ -12,6 +12,7 @@
     bashrcExtra = ''
       export TZ="America/Toronto"
       export BROWSER=wslview
+      export NIX_CONFIG="experimental-features = nix-command flakes"
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       complete -F __start_kubectl k
       export USERNAMETEST="${config.home.username}"
