@@ -6,6 +6,7 @@ This is my build process for NixOS running in Windows WSL, which is basically a 
 - [talosctl](https://github.com/siderolabs/talos/) - for managing Talos-based machines used for my Kubernetes clusters
 - [omnictl](https://github.com/siderolabs/omni) - for managing my Kubernetes clusters
 - [docker](https://docs.docker.com/) - for building multi-arch Docker images, and occasional tests of new containers
+- [opentofu](https://opentofu.org/) - for [bootstrapping new Kubernetes clusters](https://github.com/kenlasko/k8s-bootstrap)
 - [support for VSCode Remote](https://github.com/nix-community/nixos-vscode-server)
 - Additional supporting tools such as 
     - [K9S](https://github.com/derailed/k9s) - kubectl TUI
