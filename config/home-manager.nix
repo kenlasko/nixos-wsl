@@ -15,6 +15,7 @@
     sops                # Simple and flexible tool for managing secrets
     wget                # A network utility to retrieve files from the Web
     wslu                # Windows Subsystem for Linux utilities
+    yq-go               # Command-line YAML processor
   ];
 
   home.file.talosconfig = {
