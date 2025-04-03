@@ -22,6 +22,7 @@
       cilium = "cilium --namespace=cilium";
       k = "kubectl";
       tf = "tofu";
+      kuc = "kubectl config use-context";
     };
   };
 }
