@@ -24,7 +24,7 @@ You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](
 This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt secret information. Read [Configuring SOPS](#Configuring-SOPS) for details. You will require your own unique versions of the following files:
 - `keys.txt` for secure secrets encryption using SOPS
 - [.sops.yaml](.sops.yaml) for defining the SOPS configuration
-- `secrets.yaml` for securely storing secrets
+- [secrets.yaml](config/secrets.yaml) for securely storing secrets
 - [sops.nix](config/sops.nix) for referencing secrets in NixOS
 
 
@@ -100,7 +100,7 @@ mkdir -p ~/.config/sops/age
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt  # Generate private key
 ```
-2. Open `.config/sops/age/keys.txt` and copy the public key value. Save `~/.config/sops/age/keys.txt` somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt files encrypted with SOPS.
+2. Open `.config/sops/age/keys.txt` and copy the public key value. Save `~/.config/sops/age/keys.txt` somewhere secure and **NOT in the Git repo**. If you lose this, you will not be able to decrypt files encrypted with SOPS.
 ```
 # created: 2025-03-28T12:57:52Z
 # public key: age1jmeardw5auuj5m6yll49cpxtvge8cklltk9tlmy24xdre3wal4dq5vek65    <--- Copy this (but without the `# public key:` part)
@@ -137,7 +137,7 @@ sops --config .sops.yaml config/secrets.yaml
 cat config/secrets.yaml
 ```
 8. Save all modified content:
-- `~/.config/sops/age/keys.txt` - save somewhere secure and NOT in the Git repo. If you lose this, you will not be able to decrypt files encrypted with SOPS.
+- `~/.config/sops/age/keys.txt` - save somewhere secure and **NOT in the Git repo**. If you lose this, you will not be able to decrypt files encrypted with SOPS.
 - `~/.sops.yaml` - this will replace the `.sops.yaml` at the root of the repo
 - `config/secrets.yaml` - this will replace the `config/secrets.yaml` in the repo
 
