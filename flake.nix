@@ -49,6 +49,21 @@
               dates = "weekly";
               options = "--delete-older-than 1w";
             };
+
+            # Install omnictl from a local path
+            environment.systemPackages = [
+              (pkgs.stdenv.mkDerivation {
+                name = "omnictl";
+                version = "latest";
+                src =  ./packages/omnictl-linux-amd64;
+                dontUnpack = true;
+                installPhase = ''
+                  mkdir -p $out/bin
+                  cp $src $out/bin/omnictl
+                  chmod +x $out/bin/omnictl
+                '';
+              })
+            ];
           })
         ];
       };
