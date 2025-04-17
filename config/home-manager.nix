@@ -39,18 +39,6 @@
 
   home.file.omniconfig = {
     enable = true;
-    target = ".pre-commit-config.yaml";
-    text = ''
-      repos:
-        - repo: https://github.com/GitGuardian/ggshield
-          rev: v1.37.0
-          hooks:
-            - id: ggshield
-      '';
-  };
-  
-  home.file.precommit = {
-    enable = true;
     target = ".config/omni/config";
     text = ''
       contexts:
@@ -62,6 +50,7 @@
       context: default
       '';
   };
+
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows
   # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"
