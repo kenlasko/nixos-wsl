@@ -10,9 +10,11 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     ansible             # Automatic package installation
+    ggshield            # GitGuardian CLI for scanning secrets in code
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
     sops                # Simple and flexible tool for managing secrets
+    trufflehog          # Scans git repositories for secrets
     wget                # A network utility to retrieve files from the Web
     wslu                # Windows Subsystem for Linux utilities
     yq-go               # Command-line YAML processor
