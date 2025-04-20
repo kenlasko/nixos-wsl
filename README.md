@@ -100,7 +100,7 @@ mkdir -p ~/.config/sops/age
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt  # Generate private key
 ```
-2. Open `.config/sops/age/keys.txt` and copy the public key value. Save `~/.config/sops/age/keys.txt` somewhere secure and **NOT in the Git repo**. If you lose this, you will not be able to decrypt files encrypted with SOPS.
+2. Open `.config/sops/age/keys.txt` and copy the public key value. Save `~/.config/sops/age/keys.txt` somewhere secure and **NOT in the Git repo**. (Mine is in Bitwarden). If you lose this, you will not be able to decrypt files encrypted with SOPS.
 ```
 # created: 2025-03-28T12:57:52Z
 # public key: age1jmeardw5auuj5m6yll49cpxtvge8cklltk9tlmy24xdre3wal4dq5vek65    <--- Copy this (but without the `# public key:` part)
