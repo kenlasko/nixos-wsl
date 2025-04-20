@@ -26,5 +26,9 @@
         owner = "ken";
         mode = "0444";
     };
+    secrets.ucdialplans-admin-msuserid = {
+        owner = "ken";
+        mode = "0444";
+    };
   };
 }
