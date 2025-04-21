@@ -86,6 +86,15 @@
               system.stateVersion = "24.11";
             })
 
+            # User configuration
+            ({ config, pkgs, ... }: {
+              users.users.ken = {
+                isNormalUser = true;
+                home = "/home/ken";
+                shell = pkgs.bashInteractive;
+              };
+            })
+
             # Nix-LD configuration
             nix-ld.nixosModules.nix-ld
             { programs.nix-ld.dev.enable = true; }
