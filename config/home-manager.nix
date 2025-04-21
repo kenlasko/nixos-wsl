@@ -6,8 +6,7 @@
   home.homeDirectory = lib.mkForce "/home/ken";
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "24.11";
-  home.isNormalUser = true;
-  
+
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     ansible             # Automatic package installation
