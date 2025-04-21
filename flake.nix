@@ -83,6 +83,35 @@
               home-manager.extraSpecialArgs = { inherit pkgs-stable inputs hostname enableWsl; };
               home-manager.users.ken = import ./config/home-manager.nix;
             }
+            
+
+            (lib.mkIf (!enableWsl) {
+              boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ]; # Common modules needed early for storage
+              boot.initrd.kernelModules = [ ];
+              boot.kernelModules = [ "kvm-amd" ]; # Or "kvm-intel" - adjust if needed, could be another parameter
+              boot.extraModulePackages = [ ];
+
+              fileSystems."/" = {
+                # IMPORTANT: Make sure NIXOS_SD is the correct label for your server's SD card/disk
+                device = "/dev/disk/by-label/NIXOS_SD";
+                fsType = "ext4";
+                options = [ "noatime" ]; # Good default for SSDs/SD cards
+              };
+
+              # Example for swap (optional, adjust device/label)
+              # fileSystems."/swap" = {
+              #   device = "/dev/disk/by-label/NIXOS_SWAP";
+              #   fsType = "swap";
+              # };
+              # swapDevices = [ { device = "/dev/disk/by-label/NIXOS_SWAP"; } ];
+
+              # Add bootloader config - GRUB is common for servers
+              boot.loader.grub.enable = true;
+              boot.loader.grub.device = "/dev/sda"; # IMPORTANT: Set to the actual boot disk (e.g., /dev/sda, /dev/nvme0n1), NOT a partition or label
+              # boot.loader.grub.useOSProber = false; # Usually false for single-boot servers
+            })
+
+
 
             # Inline settings and architecture-specific package
             ({ pkgs, ... }: {
