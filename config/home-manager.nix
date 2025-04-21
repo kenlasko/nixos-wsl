@@ -3,7 +3,7 @@
 {
   nixpkgs.config.allowUnfree = true;
   home.username = "ken";
-  home.homeDirectory = "/home/ken";
+  home.homeDirectory = lib.mkForce "/home/ken";
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "24.11";
 
