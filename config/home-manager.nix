@@ -9,7 +9,7 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-  #  ansible             # Automatic package installation
+  #  ansible             # Automatic package installation (not needed with Terraform/OpenTofu)
     ggshield            # GitGuardian CLI for scanning secrets in code
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
