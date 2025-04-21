@@ -1,72 +1,138 @@
 {
-  description = "NixOS configuration";
+  description = "NixOS configuration for specific hosts with conditional WSL and default alias";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11"; # Use the actual stable branch (24.05 as of writing)
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nix-ld.url = "github:Mic92/nix-ld";
     sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/release-24.11"; # Match stable nixpkgs branch
+      inputs.nixpkgs.follows = "nixpkgs"; # Follows unstable unless overridden
     };
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-stable, nixos-wsl, nix-ld, sops-nix, home-manager, ... }: {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          pkgs-stable = import nixpkgs {
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-wsl, nix-ld, sops-nix, home-manager, ... }:
+    let
+      # Helper function to generate NixOS configuration
+      mkNixosSystem = { system, hostname, enableWsl ? false }:
+        let
+          omnictlSrcMap = {
+            "x86_64-linux" = ./packages/omnictl-linux-amd64;
+            "aarch64-linux" = ./packages/omnictl-linux-arm64;
+          };
+          omnictlSrc = omnictlSrcMap.${system} or (throw "Unsupported system for omnictl: ${system}");
+
+          pkgs-stable = import inputs.nixpkgs-stable {
+            inherit system;
             config.allowUnfree = true;
           };
+
+          # No need for separate lib variable here anymore
+
+          # --- Conditionally define the list of WSL modules/configs ---
+          wslConfig =
+            if enableWsl then
+              [
+                # Include the base WSL module path
+                nixos-wsl.nixosModules.default
+                # Include the specific WSL settings as a separate module element
+                {
+                  wsl.enable = true;
+                  wsl.defaultUser = "ken";
+                  # Add other WSL specific options here if needed
+                  # environment.systemPackages = [ pkgs.wslu ];
+                }
+              ]
+            else
+              # If WSL is not enabled, this contributes nothing to the module list
+              [];
+          # --- End conditional definition ---
+
+        in nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit pkgs-stable inputs hostname enableWsl;
+          };
+
+          # Combine the unconditional modules with the conditional WSL modules
+          modules = [
+            # Basic host setup
+            ({ config, pkgs, ... }: {
+              networking.hostName = hostname;
+              system.stateVersion = "24.11";
+            })
+
+            # Nix-LD configuration
+            nix-ld.nixosModules.nix-ld
+            { programs.nix-ld.dev.enable = true; }
+
+            # Your custom configurations from ./config
+            ./config
+
+            # Sops configuration
+            sops-nix.nixosModules.sops
+            # Add sops settings...
+
+            # Home Manager configuration
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit pkgs-stable inputs hostname enableWsl; };
+              home-manager.users.ken = import ./config/home-manager.nix;
+            }
+
+            # Inline settings and architecture-specific package
+            ({ pkgs, ... }: {
+              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1w"; };
+              nixpkgs.config.allowUnfree = true;
+
+              environment.systemPackages = [
+                (pkgs.stdenv.mkDerivation {
+                  pname = "omnictl";
+                  version = "latest";
+                  src = omnictlSrc;
+                  dontUnpack = true;
+                  installPhase = ''
+                    runHook preInstall
+                    mkdir -p $out/bin
+                    cp $src $out/bin/omnictl
+                    chmod +x $out/bin/omnictl
+                    runHook postInstall
+                  '';
+                  meta.platforms = [ system ];
+                })
+                pkgs.git
+              ];
+            })
+          ] ++ wslConfig; # Append the conditional wslConfig list here
+        };
+    in
+    {
+      nixosConfigurations = {
+        # Host configurations (unchanged)
+        "rpi1" = mkNixosSystem {
+          system = "aarch64-linux";
+          hostname = "rpi1";
+        };
+        "rpi2" = mkNixosSystem {
+          system = "aarch64-linux";
+          hostname = "rpi2";
+        };
+       "wsl" = mkNixosSystem {
+          system = "x86_64-linux";
+          hostname = "nixos";
+          enableWsl = true; # Enable WSL here
         };
 
-        modules = [
-          nix-ld.nixosModules.nix-ld
-          { 
-            programs.nix-ld.dev.enable = true; 
-          }
-          ./config    # This contains several other .nix configs
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ken = import ./config/home-manager.nix;
-          }
-          nixos-wsl.nixosModules.default
-          {
-            system.stateVersion = "24.11";
-            wsl.enable = true;
-            wsl.defaultUser = "ken";
-          }
-          # Inline the settings from your original configuration.nix
-          ({ pkgs, ... }: {
-            nix.gc = {
-              automatic = true;
-              dates = "weekly";
-              options = "--delete-older-than 1w";
-            };
-
-            # Install omnictl from a local path
-            environment.systemPackages = [
-              (pkgs.stdenv.mkDerivation {
-                name = "omnictl";
-                version = "latest";
-                src =  ./packages/omnictl-linux-amd64;
-                dontUnpack = true;
-                installPhase = ''
-                  mkdir -p $out/bin
-                  cp $src $out/bin/omnictl
-                  chmod +x $out/bin/omnictl
-                '';
-              })
-            ];
-          })
-        ];
+        # Alias (unchanged)
+        "nixos" = self.nixosConfigurations."wsl";
       };
+
+      # Formatter (unchanged)
+      formatter = inputs.nixpkgs.legacyPackages."x86_64-linux".alejandra;
     };
-  };
 }
