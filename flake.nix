@@ -38,15 +38,14 @@
                 # Include the base WSL module path
                 nixos-wsl.nixosModules.default
                 # Include the specific WSL settings as a separate module element
-                {
+                ({ pkgs, ... }: { 
                   wsl.enable = true;
                   wsl.defaultUser = "ken";
                   # Add other WSL specific options here if needed
-                  # environment.systemPackages = [ pkgs.wslu ];
-                }
+                  environment.systemPackages = [ pkgs.wslu ];
+                })
               ]
             else
-              # If WSL is not enabled, this contributes nothing to the module list
               [
                 {
                   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ]; # Common modules
@@ -59,10 +58,6 @@
                     fsType = "ext4";
                     options = [ "noatime" ];
                   };
-
-                  # Add swap config here if needed for servers
-                  # fileSystems."/swap" = { ... };
-                  # swapDevices = [ ... ];
 
                   # Add bootloader config
                   boot.loader.grub.enable = true;
