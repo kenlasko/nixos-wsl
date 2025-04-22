@@ -15,7 +15,7 @@
         path = "/home/ken/.kube/config";
         mode = "0600";
     };
-    secrets.omni-s3-config.yaml = {
+    secrets."omni-s3-config.yaml" = {
         owner = "ken";
         path = "/home/ken/omni/s3-config.yaml";
         mode = "0444";
