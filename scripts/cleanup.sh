@@ -7,7 +7,6 @@ git clone git@github.com:kenlasko/k8s-lab.git
 git clone git@github.com:kenlasko/k8s-cloud.git
 git clone git@github.com:kenlasko/omni.git
 git clone git@github.com:kenlasko/docker.git
-git clone git@github.com:kenlasko/omni-public.git
 git clone git@github.com:kenlasko/pxeboot.git
 git clone git@github.com:kenlasko/k8s-bootstrap.git terraform
 
