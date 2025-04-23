@@ -17,6 +17,10 @@ This is my build process for NixOS running in Windows WSL, which is basically a 
 
 Your needs will certainly differ from this, but it should give you a very good starting point. I am still very new at this and there's a lot of nuances I don't fully understand, so there could be lots of room for improvement!
 
+## Related Repositories:
+- [K8s Bootstrap](https://github.com/kenlasko/k8s-bootstrap): Bootstraps Kubernetes clusters with essential apps using Terraform/OpenTofu
+- [K8s Cluster Configuration](https://github.com/kenlasko/k8s): Manages Kubernetes cluster manifests and workloads.
+- [Omni](https://github.com/kenlasko/omni): Creates and manages the Kubernetes clusters.
 
 # Prerequisites
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
