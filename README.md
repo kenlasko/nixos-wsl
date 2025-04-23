@@ -55,7 +55,7 @@ wsl -d <Name of distribution ie NixOS> --cd ~
 ```
 
 2. Copy your SOPS `keys.txt` into what will be the default users `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
-```
+```bash
 sudo mkdir -p /home/ken/.config/sops/age
 sudo chown -R nixos:users /home/ken
 # Copy the keys.txt file using whatever method works
@@ -66,20 +66,20 @@ nano /home/ken/.config/sops/age/keys.txt
 
 > [!WARNING]
 > You will probably not want to do this unless you are me. Instead, you should clone the repo into `/etc/nixos`:
-> ```
+> ```bash
 > export NIX_CONFIG="experimental-features = nix-command flakes"
 > nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos && sudo rm -rf /etc/nixos/* && sudo cp -r nixos/* /etc/nixos`
 > ``` 
 > and make any necessary changes to usernames (in `flake.nix`, `config/git.nix` and `config/home-manager.nix`) and secret references (in `config/sops.nix`) and replace `.sops.yaml` and `config/secrets.nix` with your own.
 
-```
+```bash
 sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl
 ```
 
 5. Exit and re-login. Should automatically login as `ken`
 
 6. Reset the permissions on `.config`, `.ssh` and `.kube` directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
-```
+```bash
 # Fix permissions for the .ssh .config and .kube directories
 sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 ```
@@ -89,7 +89,7 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
 7. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform final setup and cleanup tasks. 
-```
+```bash
 ~/nixos/scripts/cleanup.sh
 ```
 
@@ -100,19 +100,19 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 Here's the configuration steps for first-time users. This assumes a clean NixOS distribution with no prior configuration:
 
 1. Generating age private key. 
-```
+```bash
 mkdir -p ~/.config/sops/age
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt  # Generate private key
 ```
 2. Open `.config/sops/age/keys.txt` and copy the public key value. Save `~/.config/sops/age/keys.txt` somewhere secure and **NOT in the Git repo**. (Mine is in Bitwarden). If you lose this, you will not be able to decrypt files encrypted with SOPS.
-```
+```bash
 # created: 2025-03-28T12:57:52Z
 # public key: age1jmeardw5auuj5m6yll49cpxtvge8cklltk9tlmy24xdre3wal4dq5vek65    <--- Copy this (but without the `# public key:` part)
 AGE-SECRET-KEY-1QCX332PRGV7GA6R8MJZ7CDU7S9Y5G7J0FU8U0L9PL5DUV835R7YQC7DDU5
 ```
 3. Create a file called `.sops.yaml` using the template below, and paste the public key into it
-```
+```yaml
 keys:
   - &primary age1jmeardw5auuj5m6yll49cpxtvge8cklltk9tlmy24xdre3wal4dq5vek65
 creation_rules:
@@ -123,22 +123,22 @@ creation_rules:
 ```
 
 4. Make a temporary `config` directory
-```
+```bash
 mkdir config
 ```
 5. Run the following command to open a nix shell with `sops` in it. 
 
-```
+```bash
 export NIX_CONFIG="experimental-features = nix-command flakes"
 nix shell nixpkgs#sops 
 ```
 
 6. Create a default `secrets.yaml` by running the below command. SOPS will create a default `secrets.yaml` with some sample content. Remove the sample content, add all desired secrets and save. SOPS will encrypt the contents automatically using the `keys.txt` created earlier.
-```
+```bash
 sops --config .sops.yaml config/secrets.yaml
 ```
 7. Verify that `secrets.yaml` is encrypted by running the below command:
-```
+```bash
 cat config/secrets.yaml
 ```
 8. Save all modified content:
@@ -149,16 +149,16 @@ cat config/secrets.yaml
 
 # NixOS Handy Commands
 ## Full Rebuild
-```
+```bash
 sudo nixos-rebuild switch --recreate-lock-file --flake .
 ```
 ## Delete all historical versions older than 7 days
-```
+```bash
 sudo nix profile wipe-history --older-than 7d --profile /nix/var/nix/profiles/system
 ```
 
 ## Garbage Collection
-```
+```bash
 sudo nix-collect-garbage --delete-old
 nix-collect-garbage --delete-old
 ```
@@ -173,7 +173,7 @@ C:\WINDOWS\system32\wsl.exe -d nixos
 ## Git Push from VSCode fails
 If you get `Host key verification failed. fatal: Could not read from remote repository.` when trying to push a git update to the remote repo, try this:
 1. From VSCode, open a terminal and type:
-```
+```bash
 git push
 ```
 2. Answer yes to any questions you get.
