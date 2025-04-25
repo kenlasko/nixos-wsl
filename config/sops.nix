@@ -10,12 +10,17 @@
         path = "/home/ken/.ssh/github_rsa";
         mode = "0400";
     };
+    secrets."github_rsa.pub" = {
+        owner = "ken";
+        path = "/home/ken/.ssh/github_rsa.pub";
+        mode = "0400";
+    };
     secrets.id_codesign = {
         owner = "ken";
         path = "/home/ken/.ssh/id_codesign";
         mode = "0400";
     };
-    secrets.id_codesign.pub = {
+    secrets."id_codesign.pub" = {
         owner = "ken";
         path = "/home/ken/.ssh/id_codesign.pub";
         mode = "0400";
