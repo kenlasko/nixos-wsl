@@ -3,7 +3,7 @@
 }: {
   home-manager.users.ken = {
     home.packages = with pkgs; [
-      pinentry
+      # pinentry
     ];
 
 
@@ -22,20 +22,21 @@
           };
         };
         # Add GPG signing configurations
-        user.signingkey = "3A82EFDA2CD08F09";
+        gpg.format = "ssh";
+        user.signingkey = "~/.ssh/id_codesign.pub";
         commit.gpgsign = true;
-        gpg.program = "${pkgs.gnupg}/bin/gpg";
+        #gpg.program = "${pkgs.gnupg}/bin/gpg";
       };
     };
 
-    # GPG Configuration
-    programs.gpg = {
-      enable = true;
-    };
-    # Enable GPG Agent via services
-    services.gpg-agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry;
-    };
+    # # GPG Configuration
+    # programs.gpg = {
+    #   enable = true;
+    # };
+    # # Enable GPG Agent via services
+    # services.gpg-agent = {
+    #   enable = true;
+    #   pinentryPackage = pkgs.pinentry;
+    # };
   };
 }

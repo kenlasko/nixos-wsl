@@ -5,9 +5,19 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/ken/.config/sops/age/keys.txt";
 
-    secrets.sshkey = {
+    secrets.github_rsa = {
         owner = "ken";
         path = "/home/ken/.ssh/github_rsa";
+        mode = "0400";
+    };
+    secrets.id_codesign = {
+        owner = "ken";
+        path = "/home/ken/.ssh/id_codesign";
+        mode = "0400";
+    };
+    secrets.id_codesign.pub = {
+        owner = "ken";
+        path = "/home/ken/.ssh/id_codesign.pub";
         mode = "0400";
     };
     secrets.kubeconfig = {
