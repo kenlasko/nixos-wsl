@@ -1,5 +1,11 @@
-# Manage with nix-shell -p sops --run "sops ~/nixos/config/secrets.yaml"
+# Manage by running `sops ~/nixos/config/secrets.yaml`
+
+{ pkgs, ... }: # Ensure inputs is available if used
 {
+  environment.systemPackages = with pkgs; [
+    sops
+  ];
+  
   sops = {
     defaultSopsFile = ./secrets.yaml;
     defaultSopsFormat = "yaml";

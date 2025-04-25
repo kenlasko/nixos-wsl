@@ -5,7 +5,6 @@
     home.packages = with pkgs; [
     ];
 
-
     programs.git = {
       enable = true;
 
@@ -22,7 +21,7 @@
         };
         # Add code signing configuration
         gpg.format = "ssh";
-        user.signingkey = "~/.ssh/id_codesign.pub";
+        user.signingkey = "~/.ssh/id_codesign.pub";  # This secret is stored in age-encrypted secrets.yaml
         commit.gpgsign = true;
       };
     };

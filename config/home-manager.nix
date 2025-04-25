@@ -14,12 +14,12 @@
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
     pre-commit          # Framework for managing and maintaining multi-language pre-commit hooks
-    sops                # Simple and flexible tool for managing secrets
     trufflehog          # Scans git repositories for secrets
     wget                # A network utility to retrieve files from the Web
     yq-go               # Command-line YAML processor
   ];
 
+  # Configure Talos
   home.file.talosconfig = {
     enable = true;
     target = ".talos/config";
@@ -36,6 +36,7 @@
       '';
   };
 
+  # Configure Omni
   home.file.omniconfig = {
     enable = true;
     target = ".config/omni/config";

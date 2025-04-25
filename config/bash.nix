@@ -23,6 +23,7 @@
       k = "kubectl";
       tf = "tofu";
       kuc = "kubectl config use-context";
+      nano = "nano --modernbindings";
     };
   };
 }
