@@ -148,6 +148,12 @@ cat config/secrets.yaml
 
 
 # NixOS Handy Commands
+## Update packages
+```
+nix flake update
+sudo nixos-rebuild switch
+```
+
 ## Full Rebuild
 ```bash
 sudo nixos-rebuild switch --recreate-lock-file --flake .
