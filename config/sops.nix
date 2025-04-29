@@ -11,6 +11,16 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/ken/.config/sops/age/keys.txt";
 
+    secrets.id_ed25519= {
+        owner = "ken";
+        path = "/home/ken/.ssh/id_ed25519";
+        mode = "0400";
+    };
+    secrets."id_ed25519.pub" = {
+        owner = "ken";
+        path = "/home/ken/.ssh/id_ed25519.pub";
+        mode = "0400";
+    };
     secrets.github_rsa = {
         owner = "ken";
         path = "/home/ken/.ssh/github_rsa";

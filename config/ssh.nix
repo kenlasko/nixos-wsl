@@ -11,4 +11,17 @@
         StrictHostKeyChecking no
     '';
   };
+
+  services.openssh = {
+    enable = true;  # Enable the OpenSSH server
+    settings = {
+      PasswordAuthentication = true;
+      PubkeyAuthentication = true;
+    };
+    extraConfig = ''
+      PermitRootLogin no
+      AllowUsers ken
+      UsePAM yes
+    '';
+  };
 }
