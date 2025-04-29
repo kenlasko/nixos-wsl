@@ -15,7 +15,7 @@
   services.openssh = {
     enable = true;  # Enable the OpenSSH server
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       PubkeyAuthentication = true;
     };
     extraConfig = ''
