@@ -29,11 +29,6 @@
             config.allowUnfree = true;
           };
 
-          security.sudo = {
-            enable = true;
-            wheelNeedsPassword = false;
-          };
-
           # --- Conditionally define the list of WSL modules/configs ---
           wslConfig =
             if enableWsl then
@@ -101,6 +96,12 @@
                 ];
               };
             })
+            
+            # Enable passwordless sudo
+            security.sudo = {
+              enable = true;
+              wheelNeedsPassword = false;
+            };
 
             # Nix-LD configuration
             nix-ld.nixosModules.nix-ld
@@ -163,7 +164,35 @@
         "nas01" = mkNixosSystem {
           system = "x86_64-linux";
           hostname = "nixos-nas";
+
+          # Add a swap file specifically for this host
+          modules = [
+            ({ ... }: {
+              swapDevices = [
+                {
+                  device = "/swapfile";
+                  size = 2048; # 2GB
+                }
+              ];
+
+              systemd.services."create-swapfile" = {
+                wantedBy = [ "swap.target" ];
+                serviceConfig = {
+                  ExecStart = ''
+                    /run/current-system/sw/bin/fallocate -l 2G /swapfile
+                    chmod 600 /swapfile
+                    mkswap /swapfile
+                  '';
+                  Type = "oneshot";
+                  RemainAfterExit = true;
+                };
+              };
+            })
+          ];
         };
+        # WSL configuration (new)
+        # This is where we enable WSL for the "wsl" host
+        # Note: The hostname is set to "nixos" for WSL, but you can change it if needed
        "wsl" = mkNixosSystem {
           system = "x86_64-linux";
           hostname = "nixos";
