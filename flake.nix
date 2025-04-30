@@ -50,7 +50,7 @@
                 {
                   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ]; # Common modules
                   boot.initrd.kernelModules = [ ];
-                  boot.kernelModules = [ "kvm-intel" ]; # Or "kvm-intel"
+                  boot.kernelModules = [ "kvm-intel" ]; 
                   boot.extraModulePackages = [ ];
 
                   fileSystems."/" = {
@@ -60,13 +60,13 @@
                   };
                   fileSystems."/boot" = { 
                     device = "/dev/disk/by-label/NIXBOOT";
-                    # ...
+                    fsType = "vfat";
+                    options = [ "fmask=0022" "dmask=0022" ];
                   };
 
                   # Add bootloader config
                   boot.loader.grub.enable = true;
                   boot.loader.grub.device = "/dev/sda"; # Adjust boot device!
-                  # boot.loader.grub.useOSProber = false;
                 }
               ];
           # --- End conditional definition ---
@@ -154,6 +154,10 @@
         "rpi2" = mkNixosSystem {
           system = "aarch64-linux";
           hostname = "rpi2";
+        };
+        "nas01" = mkNixosSystem {
+          system = "x86_64-linux";
+          hostname = "nixos-nas";
         };
        "wsl" = mkNixosSystem {
           system = "x86_64-linux";
