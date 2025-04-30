@@ -50,13 +50,17 @@
                 {
                   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ]; # Common modules
                   boot.initrd.kernelModules = [ ];
-                  boot.kernelModules = [ "kvm-amd" ]; # Or "kvm-intel"
+                  boot.kernelModules = [ "kvm-intel" ]; # Or "kvm-intel"
                   boot.extraModulePackages = [ ];
 
                   fileSystems."/" = {
-                    device = "/dev/disk/by-label/NIXOS_SD"; # Adjust Label!
+                    device = "/dev/disk/by-label/NIXROOT"; 
                     fsType = "ext4";
                     options = [ "noatime" ];
+                  };
+                  fileSystems."/boot" = { 
+                    device = "/dev/disk/by-label/NIXBOOT";
+                    # ...
                   };
 
                   # Add bootloader config
