@@ -98,10 +98,12 @@
             })
             
             # Enable passwordless sudo
-            security.sudo = {
-              enable = true;
-              wheelNeedsPassword = false;
-            };
+            {
+              security.sudo = {
+                enable = true;
+                wheelNeedsPassword = false;
+              };
+            }
 
             # Nix-LD configuration
             nix-ld.nixosModules.nix-ld
