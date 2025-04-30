@@ -66,7 +66,7 @@
 
                   # Add bootloader config
                   boot.loader.grub.enable = true;
-                  boot.loader.grub.device = "/dev/sda"; # Adjust boot device!
+                  boot.loader.grub.device = "/dev/sda";
                 }
               ];
           # --- End conditional definition ---
