@@ -29,7 +29,10 @@
             config.allowUnfree = true;
           };
 
-          # No need for separate lib variable here anymore
+          security.sudo = {
+            enable = true;
+            wheelNeedsPassword = false;
+          };
 
           # --- Conditionally define the list of WSL modules/configs ---
           wslConfig =
