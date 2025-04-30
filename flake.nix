@@ -90,6 +90,8 @@
               users.users.ken = {
                 isNormalUser = true;
                 home = "/home/ken";
+                extraGroups = [ "wheel" ];
+                hashedPassword = "";
                 shell = pkgs.bashInteractive;
                 openssh.authorizedKeys.keys = [
                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGs8Lx17sBeMiq24QWEDgshwtCGlymzQ6T/3DBH5Fwjv ken.lasko@gmail.com"
