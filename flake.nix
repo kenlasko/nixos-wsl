@@ -111,24 +111,10 @@
               config = lib.mkIf (builtins.elem config.networking.hostName [ "nixos-nas" ]) {
                 swapDevices = [
                   {
-                    device = "/.swapfile";
+                    device = "/swapfile";
                     size = 2048; # Size in MB
                   }
                 ];
-                systemd.services."swap-create" = {
-                  description = "Create swapfile if missing";
-                  before = [ "swap-swapfile.swap" ];
-                  serviceConfig = {
-                    Type = "oneshot";
-                    ExecStart = ''
-                      /run/current-system/sw/bin/truncate -s 2G /.swapfile
-                      chmod 600 /.swapfile
-                      mkswap /.swapfile
-                    '';
-                    RemainAfterExit = true;
-                  };
-                  wantedBy = [ "multi-user.target" ];
-                };
               };
             })
 
