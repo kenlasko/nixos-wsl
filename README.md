@@ -27,7 +27,7 @@ Links to my other repositories mentioned or used in this repo:
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
 
 This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt secret information. Read [Configuring SOPS](#Configuring-SOPS) for details. You will require your own unique versions of the following files:
-- `keys.txt` for secure secrets encryption using SOPS
+- `keys.txt` for secure secrets encryption using SOPS and age (see [Configuring SOPS](#Configuring-SOPS) for instructions on how to generate)
 - [.sops.yaml](.sops.yaml) for defining the SOPS configuration
 - [secrets.yaml](config/secrets.yaml) for securely storing secrets
 - [sops.nix](config/sops.nix) for referencing secrets in NixOS
