@@ -13,6 +13,7 @@
     ggshield            # GitGuardian CLI for scanning secrets in code
     jq                  # Lightweight and flexible command-line JSON processor
     kubeseal            # A Kubernetes controller and tool for one-way encrypted Secrets
+    openssl             # OpenSSL is a robust, full-featured open-source toolkit
     pre-commit          # Framework for managing and maintaining multi-language pre-commit hooks
     trufflehog          # Scans git repositories for secrets
     wget                # A network utility to retrieve files from the Web
