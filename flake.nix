@@ -92,7 +92,7 @@
                 hashedPassword = "";
                 shell = pkgs.bashInteractive;
                 openssh.authorizedKeys.keys = [
-                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGs8Lx17sBeMiq24QWEDgshwtCGlymzQ6T/3DBH5Fwjv ken.lasko@gmail.com"
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPQKpuk+eeBuKg9xMkRVZ/n4Q8ggn8Msni4gAUdQrXaB Bitwarden"
                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMMucJUNg9fmu3W6iKhVBPEnNKaH6USY2bdkgp0zLUOl JuiceSSH"
                 ];
               };
