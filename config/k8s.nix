@@ -8,6 +8,7 @@
     cilium-cli        # CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
     hubble            # CLI to troubleshoot Cilium network issues
     k9s               # k9s Kubernetes TUI
+    cmctl             # Command line tool for managing Cert Manager
     kubectl           # Kubernetes CLI tool
     kubeseal          # A Kubernetes controller and tool for one-way encrypted Secrets
     kubernetes-helm   # Package manager for kubernetes
