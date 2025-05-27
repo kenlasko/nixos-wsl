@@ -52,6 +52,17 @@
       '';
   };
 
+  home.file."bin/akeyless" = {
+    executable = true;
+    source = builtins.fetchurl {
+      url = "https://akeyless-cli.s3.us-east-2.amazonaws.com/cli/latest/production/cli-linux-amd64";
+      sha256 = "1bxz4lzsqyzmnf1p44v13in882sphixvadaxsxy0dr71c0cnfbn9";
+    };
+  };
+
+  home.sessionPath = [ "$HOME/.akeyless/bin" ];
+
+
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows
   # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"
