@@ -65,11 +65,7 @@
         owner = "ken";
         mode = "0444";
     };
-    secrets."akeyless-apikey.yaml" = {
-        owner = "ken";
-        mode = "0444";
-    };
-    secrets."infisical-credentials.yaml" = {
+    secrets."eso-secretstore-secrets.yaml" = {
         owner = "ken";
         mode = "0444";
     };
