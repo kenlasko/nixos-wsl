@@ -52,6 +52,7 @@
       '';
   };
 
+  # Configure Akeyless CLI
   home.file."bin/akeyless" = {
     executable = true;
     target = ".akeyless/bin/akeyless";
