@@ -19,7 +19,6 @@ Your needs will certainly differ from this, but it should give you a very good s
 
 ## Related Repositories
 Links to my other repositories mentioned or used in this repo:
-- [K8s Bootstrap](https://github.com/kenlasko/k8s-bootstrap): Bootstraps Kubernetes clusters with essential apps using Terraform/OpenTofu
 - [K8s Cluster Configuration](https://github.com/kenlasko/k8s): Manages Kubernetes cluster manifests and workloads.
 - [Omni](https://github.com/kenlasko/omni): Creates and manages the Kubernetes clusters.
 
