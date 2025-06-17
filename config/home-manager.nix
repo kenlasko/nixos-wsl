@@ -5,7 +5,7 @@
   home.username = "ken";
   home.homeDirectory = lib.mkForce "/home/ken";
   home.enableNixpkgsReleaseCheck = false;
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [

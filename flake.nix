@@ -3,12 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11"; # Use the actual stable branch (24.05 as of writing)
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05"; # Use the actual stable branch (24.05 as of writing)
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nix-ld.url = "github:Mic92/nix-ld";
     sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11"; # Match stable nixpkgs branch
+      url = "github:nix-community/home-manager/release-25.05"; # Match stable nixpkgs branch
       inputs.nixpkgs.follows = "nixpkgs"; # Follows unstable unless overridden
     };
   };
@@ -80,7 +80,7 @@
             # Basic host setup
             ({ config, pkgs, ... }: {
               networking.hostName = hostname;
-              system.stateVersion = "24.11";
+              system.stateVersion = "25.05";
             })
 
             # User configuration
