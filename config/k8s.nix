@@ -9,6 +9,7 @@
     cilium-cli        # CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
     doppler           # CLI for managing Doppler secrets and configuration
     hubble            # CLI to troubleshoot Cilium network issues
+    glab              # CLI to interface with Gitlab objects, like variables for secret management
     infisical         # CLI for managing Infisical secrets and configuration
     k9s               # k9s Kubernetes TUI
     cmctl             # Command line tool for managing Cert Manager
