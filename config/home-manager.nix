@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -17,6 +17,8 @@
     trufflehog          # Scans git repositories for secrets
     wget                # A network utility to retrieve files from the Web
     yq-go               # Command-line YAML processor
+    # Claude Desktop
+    (inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs)
   ];
 
   # Configure Talos

@@ -2,6 +2,7 @@
   description = "NixOS configuration for specific hosts with conditional WSL and default alias";
 
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05"; # Use the actual stable branch (24.05 as of writing)
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
@@ -10,6 +11,11 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05"; # Match stable nixpkgs branch
       inputs.nixpkgs.follows = "nixpkgs"; # Follows unstable unless overridden
+    };
+    claude-desktop = {
+      url = "github:k3d3/claude-desktop-linux-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
   };
 
