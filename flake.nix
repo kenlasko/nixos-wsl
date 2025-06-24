@@ -12,11 +12,6 @@
       url = "github:nix-community/home-manager/release-25.05"; # Match stable nixpkgs branch
       inputs.nixpkgs.follows = "nixpkgs"; # Follows unstable unless overridden
     };
-    claude-desktop = {
-      url = "github:k3d3/claude-desktop-linux-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-wsl, nix-ld, sops-nix, home-manager, ... }:
