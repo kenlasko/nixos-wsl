@@ -71,7 +71,7 @@ nano /home/ken/.config/sops/age/keys.txt
 > ``` 
 > and make any necessary changes to usernames (in `flake.nix`, `config/git.nix` and `config/home-manager.nix`) and secret references (in `config/sops.nix`) and replace `.sops.yaml` and `config/secrets.nix` with your own. 
 >
-> If you are me, then go ahead and run this.
+> If you are me, then go ahead and run this ⬇️
 
 ```bash
 sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl --refresh
