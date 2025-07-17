@@ -57,7 +57,7 @@
     target = ".akeyless/bin/akeyless";
     source = builtins.fetchurl {
       url = "https://akeyless-cli.s3.us-east-2.amazonaws.com/cli/latest/production/cli-linux-amd64";
-      sha256 = "1r3lck6a9yv8dqd8qnl9fx2qb44ls56c85z00a04c24rwv4h8kw8";
+      sha256 = "0b1nwpbfnvsgq0ki8f8ywgdmspddipma26bgxhy780iqzrw42a43";
     };
   };
   home.sessionPath = [ "$HOME/.akeyless/bin" ];
