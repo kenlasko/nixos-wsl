@@ -53,7 +53,7 @@ This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt sec
 wsl -d <Name of distribution ie NixOS> --cd ~
 ```
 
-2. Copy your SOPS `keys.txt` into what will be the default users `~/.config/sops/age` folder. For instructions on setting up SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
+2. Copy your SOPS `keys.txt` that's been saved somewhere secure and **NOT in the Git repo** into what will be the default users `~/.config/sops/age` folder. For new installations of SOPS and age, see [Configuring SOPS](#Configuring-SOPS)
 ```bash
 sudo mkdir -p /home/ken/.config/sops/age
 sudo chown -R nixos:users /home/ken
@@ -69,15 +69,17 @@ nano /home/ken/.config/sops/age/keys.txt
 > export NIX_CONFIG="experimental-features = nix-command flakes"
 > nix run nixpkgs#git -- clone https://github.com/kenlasko/nixos-wsl.git nixos && sudo rm -rf /etc/nixos/* && sudo cp -r nixos/* /etc/nixos`
 > ``` 
-> and make any necessary changes to usernames (in `flake.nix`, `config/git.nix` and `config/home-manager.nix`) and secret references (in `config/sops.nix`) and replace `.sops.yaml` and `config/secrets.nix` with your own.
+> and make any necessary changes to usernames (in `flake.nix`, `config/git.nix` and `config/home-manager.nix`) and secret references (in `config/sops.nix`) and replace `.sops.yaml` and `config/secrets.nix` with your own. 
+>
+> If you are me, then go ahead and run this.
 
 ```bash
-sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl
+sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl --refresh
 ```
 
-5. Exit and re-login. Should automatically login as `ken`
+4. Exit and re-login. Should automatically login as `ken`
 
-6. Reset the permissions on `.config`, `.ssh` and `.kube` directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
+5. Reset the permissions on `.config`, `.ssh` and `.kube` directories. These maintain the root perms set during initial setup, even though the rest of the folders have the correct permissions.
 ```bash
 # Fix permissions for the .ssh .config and .kube directories
 sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
@@ -87,7 +89,7 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 > [!WARNING]
 > From this point forward, these instructions are specific to my deployment. They won't apply to anybody else other than me.
 
-7. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform final setup and cleanup tasks. 
+6. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform final setup and cleanup tasks. 
 ```bash
 ~/nixos/scripts/cleanup.sh
 ```
