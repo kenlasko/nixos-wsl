@@ -150,7 +150,8 @@ cat config/secrets.yaml
 
 # NixOS Handy Commands
 ## Update packages
-```
+```bash
+cd ~/nixos
 nix flake update
 sudo nixos-rebuild switch
 ```
