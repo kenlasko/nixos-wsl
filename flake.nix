@@ -25,6 +25,12 @@
           };
           omnictlSrc = omnictlSrcMap.${system} or (throw "Unsupported system for omnictl: ${system}");
 
+          # Add allowUnfree to BOTH nixpkgs versions
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
           pkgs-stable = import inputs.nixpkgs-stable {
             inherit system;
             config.allowUnfree = true;
@@ -73,7 +79,7 @@
         in nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit pkgs-stable inputs hostname enableWsl;
+            inherit pkgs pkgs-stable inputs hostname enableWsl;
           };
 
           # Combine the unconditional modules with the conditional WSL modules
