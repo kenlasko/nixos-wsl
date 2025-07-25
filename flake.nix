@@ -148,6 +148,7 @@
             # Inline settings and architecture-specific package
             ({ pkgs, ... }: {
               nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              nix.settings.download-buffer-size = 16384;
               nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1w"; };
               nixpkgs.config.allowUnfree = true;
 
