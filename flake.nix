@@ -79,7 +79,7 @@
         in nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit pkgs pkgs-stable inputs hostname enableWsl;
+            inherit pkgs-stable inputs hostname enableWsl;
           };
 
           # Combine the unconditional modules with the conditional WSL modules
