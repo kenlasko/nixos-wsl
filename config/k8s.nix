@@ -21,7 +21,6 @@
     kustomize         # Tool for customizing Kubernetes YAML configurations
     popeye            # Kubernetes cluster resource sanitizer
 #    omnictl           # SideroLabs Omni CLI. Doesn't work, so using local install in flake.nix
-    opentofu          # Tool for building, changing, and versioning infrastructure safely and efficiently
     talosctl          # Talos Kubernetes CLI
   ];
 }
