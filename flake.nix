@@ -47,7 +47,7 @@
                   wsl.enable = true;
                   wsl.defaultUser = "ken";
                   # Add other WSL specific options here if needed
-                  environment.systemPackages = [ pkgs.wslu ];
+                  environment.systemPackages = with pkgs; [ wslu ];
                 })
               ]
             else
@@ -167,6 +167,7 @@
                   '';
                   meta.platforms = [ system ];
                 })
+                pkgs.age
                 pkgs.git
               ];
             })
