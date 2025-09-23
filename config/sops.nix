@@ -51,10 +51,10 @@
         path = "/home/ken/omni/s3-config.yaml";
         mode = "0444";
     };
-    secrets."dmh-alert.txt" = {
+    secrets."dmh-create-action.sh" = {
         owner = "ken";
-        path = "/home/ken/dmh-alert.txt";
-        mode = "0444";
+        path = "/home/ken/dmh-create-action.sh";
+        mode = "0500";
     };
     secrets.sealed-secrets-signing-key = {
         owner = "ken";
@@ -64,19 +64,19 @@
     };
     secrets."global-sealed-secrets-key.yaml" = {
         owner = "ken";
-        mode = "0444";
+        mode = "0400";
     };
     secrets."default-sealing-key.yaml" = {
         owner = "ken";
-        mode = "0444";
+        mode = "0400";
     };
     secrets."eso-secretstore-secrets.yaml" = {
         owner = "ken";
-        mode = "0444";
+        mode = "0400";
     };
     secrets.ucdialplans-admin-msuserid = {
         owner = "ken";
-        mode = "0444";
+        mode = "0400";
     };
   };
 }
