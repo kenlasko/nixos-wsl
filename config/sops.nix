@@ -51,6 +51,11 @@
         path = "/home/ken/omni/s3-config.yaml";
         mode = "0444";
     };
+    secrets."dmh-alert.txt" = {
+        owner = "ken";
+        path = "/home/ken/dmh-alert.txt";
+        mode = "0444";
+    };
     secrets.sealed-secrets-signing-key = {
         owner = "ken";
     };
