@@ -19,7 +19,10 @@
     kubelogin-oidc    # OIDC auth provider for kubectl
     kubent            # Easily check your cluster for use of deprecated APIs
     kustomize         # Tool for customizing Kubernetes YAML configurations
+    mariadb-client    # CLI for managing MariaDB databases
+    pgloader          # PostgreSQL migration tool
     popeye            # Kubernetes cluster resource sanitizer
+    postgresql_16     # PostgreSQL CLI
 #    omnictl           # SideroLabs Omni CLI. Doesn't work, so using local install in flake.nix
     talosctl          # Talos Kubernetes CLI
   ];

@@ -46,10 +46,16 @@
         path = "/home/ken/.kube/config";
         mode = "0600";
     };
+    secrets.mariadb-root-password = {
+        owner = "ken";
+    };
     secrets."omni-s3-config.yaml" = {
         owner = "ken";
         path = "/home/ken/omni/s3-config.yaml";
         mode = "0444";
+    };
+    secrets.postgresql-root-password = {
+        owner = "ken";
     };
     secrets."dmh-create-action.sh" = {
         owner = "ken";
