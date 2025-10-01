@@ -21,6 +21,10 @@
         path = "/home/ken/.ssh/id_ed25519.pub";
         mode = "0400";
     };
+    secrets.docker_pat = {
+        owner = "ken";
+        mode = "0400";
+    };
     secrets.github_rsa = {
         owner = "ken";
         path = "/home/ken/.ssh/github_rsa";
