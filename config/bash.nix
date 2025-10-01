@@ -16,6 +16,27 @@
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       complete -F __start_kubectl k
       export USERNAMETEST="${config.home.username}"
+      omni-upgrade() {
+        local env="$1"
+        if [[ -z "$env" ]]; then
+          echo "Usage: omni-upgrade {home|cloud|lab}"
+          return 1
+        fi
+
+        local template="$HOME/omni/cluster-template-$env.yaml"
+        if [[ ! -f "$template" ]]; then
+          echo "Error: template $template does not exist"
+          return 1
+        fi
+
+        omnictl cluster template sync -f "$template"
+      }
+
+      # Optional: simple completion for omni-upgrade
+      _omni_upgrade_completions() {
+        COMPREPLY=( $(compgen -W "home cloud lab" -- "${COMP_WORDS[1]}") )
+      }
+      complete -F _omni_upgrade_completions omni-upgrade
     '';
 
     shellAliases = {
