@@ -34,7 +34,7 @@
 
       # Optional: simple completion for omni-upgrade
       _omni_upgrade_completions() {
-        COMPREPLY=( $(compgen -W "home cloud lab" -- "${COMP_WORDS[1]}") )
+        COMPREPLY=( $(compgen -W "home cloud lab" -- "''${COMP_WORDS[1]}") )
       }
       complete -F _omni_upgrade_completions omni-upgrade
     '';
