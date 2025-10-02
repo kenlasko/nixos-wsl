@@ -44,6 +44,7 @@
       k = "kubectl";
       kuc = "kubectl config use-context";
       nano = "nano --modernbindings";
+      sops-update = "sops --config ~/.sops.yaml ~/nixos/secrets.yaml"
     };
   };
 }
