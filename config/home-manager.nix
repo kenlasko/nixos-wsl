@@ -60,6 +60,10 @@
     };
   };
   home.sessionPath = [ "$HOME/.akeyless/bin" ];
+  
+  home.sessionVariables = {
+    PGHOST = "192.168.10.3";
+  };
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows
   # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"
