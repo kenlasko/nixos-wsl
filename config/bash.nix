@@ -41,6 +41,7 @@
 
     shellAliases = {
       cilium = "cilium --namespace=cilium";
+      cnpg = "kubectl cnpg -n postgresql";
       k = "kubectl";
       kuc = "kubectl config use-context";
       nano = "nano --modernbindings";

@@ -1,4 +1,11 @@
-{ pkgs, pkgs-stable, ...}: 
+{ pkgs, pkgs-stable, ...}:
+let
+  kubectl-cnpg-completion = pkgs.writeShellScriptBin "kubectl_complete-cnpg" ''
+    #!/usr/bin/env sh
+    # Call the __complete command passing it all arguments
+    ${pkgs.kubectl-cnpg}/bin/kubectl-cnpg __complete "$@"
+  '';
+in
 {
   nixpkgs.config = {
     allowUnfree = true;
@@ -14,6 +21,7 @@
     cmctl             # Command line tool for managing Cert Manager
     kubectl           # Kubernetes CLI tool
     kubectl-cnpg      # CloudNative PostgreSQL plugin for kubectl
+    kubectl-cnpg-completion  # Wrapper script that enables kubectl cnpg completions
     kubeseal          # A Kubernetes controller and tool for one-way encrypted Secrets
     kubernetes-helm   # Package manager for kubernetes
     krew	            # Kubectl package installer
