@@ -13,6 +13,7 @@
     k9s               # k9s Kubernetes TUI
     cmctl             # Command line tool for managing Cert Manager
     kubectl           # Kubernetes CLI tool
+    kubectl-cnpg.     # CloudNative PostgreSQL plugin for kubectl
     kubeseal          # A Kubernetes controller and tool for one-way encrypted Secrets
     kubernetes-helm   # Package manager for kubernetes
     krew	            # Kubectl package installer
