@@ -61,10 +61,13 @@
     secrets.postgresql-root-password = {
         owner = "ken";
     };
-    secrets."dmh-create-action.sh" = {
+    secrets.dmh-email-address = {
         owner = "ken";
-        path = "/home/ken/dmh-create-action.sh";
-        mode = "0500";
+        mode = "0400";
+    };
+    secrets.dmh-email-message = {
+        owner = "ken";
+        mode = "0400";
     };
     secrets.sealed-secrets-signing-key = {
         owner = "ken";
