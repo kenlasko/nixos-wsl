@@ -63,6 +63,8 @@
   
   home.sessionVariables = {
     PGHOST = "192.168.10.3";
+    PGUSER = "postgres";
+    PGPASSWORD = "$(cat /run/secrets/postgresql-root-password)";
   };
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows
