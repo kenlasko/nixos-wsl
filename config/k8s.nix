@@ -12,7 +12,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    bws               # CLI for managing secrets in Bitwarden Secrets Manager
+    # bws               # CLI for managing secrets in Bitwarden Secrets Manager
     cilium-cli        # CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
     doppler           # CLI for managing Doppler secrets and configuration
     hubble            # CLI to troubleshoot Cilium network issues
