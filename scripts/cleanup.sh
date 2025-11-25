@@ -14,7 +14,7 @@ git clone git@github.com:kenlasko/pxeboot.git
 # Symlink `/etc/nixos` to Github synced folder. Done so we can easily save config in Git
 echo "Symlink `/etc/nixos` to Github synced folder."
 sudo rm -rf /etc/nixos/
-sudo ln -s ~/nixos /etc/nixos
+sudo ln -s /etc/nixos ~/nixos
 
 # Delete the no longer needed nixos home directory
 echo "Deleting /home/nixos directory"
