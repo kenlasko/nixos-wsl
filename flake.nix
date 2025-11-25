@@ -71,7 +71,7 @@
 
                   # Add bootloader config
                   boot.loader.grub.enable = true;
-                  boot.loader.grub.device = "/dev/sda";
+                  boot.loader.grub.device = "/dev/vda";
                 }
               ];
           # --- End conditional definition ---

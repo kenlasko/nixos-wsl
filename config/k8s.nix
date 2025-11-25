@@ -28,7 +28,6 @@ in
     kubelogin-oidc    # OIDC auth provider for kubectl
     kubent            # Easily check your cluster for use of deprecated APIs
     kustomize         # Tool for customizing Kubernetes YAML configurations
-    mariadb-client    # CLI for managing MariaDB databases
     pgloader          # PostgreSQL migration tool
     popeye            # Kubernetes cluster resource sanitizer
     postgresql_17     # PostgreSQL CLI

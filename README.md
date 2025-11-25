@@ -24,6 +24,8 @@ Links to my other repositories mentioned or used in this repo:
 # Prerequisites
 You need to be running Windows and have the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) installed and ready to go. I imagine the config will work on other OS's but I haven't tried it.
 
+If you want to install this on a dedicated VM (like I did on QNAP's Virtualization Station), [follow these steps instead](VMBUILD.md).
+
 This repo uses [SOPS](https://github.com/Mic92/sops-nix) to securely encrypt secret information. Read [Configuring SOPS](#Configuring-SOPS) for details. You will require your own unique versions of the following files:
 - `keys.txt` for secure secrets encryption using SOPS and age (see [Configuring SOPS](#Configuring-SOPS) for instructions on how to generate)
 - [.sops.yaml](.sops.yaml) for defining the SOPS configuration
@@ -74,10 +76,6 @@ nano /home/ken/.config/sops/age/keys.txt
 
 ```bash
 sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl --refresh
-```
-Or if running in a dedicated VM on NAS:
-```bash
-sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl#nas01 --refresh
 ```
 
 4. Exit and re-login. Should automatically login as `ken`
