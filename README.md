@@ -75,6 +75,10 @@ nano /home/ken/.config/sops/age/keys.txt
 ```bash
 sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl --refresh
 ```
+Or if running in a dedicated VM on NAS:
+```bash
+sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl#nas01 --refresh
+```
 
 4. Exit and re-login. Should automatically login as `ken`
 
