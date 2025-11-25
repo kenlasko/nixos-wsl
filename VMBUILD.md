@@ -19,18 +19,19 @@ A typical NixOS clean install from ISO won't mount the disk you created for it. 
 lsblk -f
 ```
 
-2. Create the disk partition:
+2. Create the disk partition (assuming the disk is `sda`):
 ```bash
-sudo parted /dev/vda -- mklabel gpt
-sudo parted /dev/vda -- mkpart ESP fat32 1MiB 512MiB
-sudo parted /dev/vda -- set 1 esp on
-sudo parted /dev/vda -- mkpart primary ext4 512MiB 100%
+sudo parted /dev/sda -- mklabel gpt
+sudo parted /dev/sda -- mkpart primary 1MiB 3MiB
+sudo parted /dev/sda -- set 1 bios_grub on
+sudo parted /dev/sda -- mkpart primary 3MiB 503MiB
+sudo parted /dev/sda -- mkpart primary 503MiB 100%
 ```
 
 3. Format the partitions
 ```bash
-sudo mkfs.vfat -n NIXBOOT /dev/vda1
-sudo mkfs.ext4 -L NIXROOT /dev/vda2
+sudo mkfs.vfat -n NIXBOOT /dev/sda2
+sudo mkfs.ext4 -L NIXROOT /dev/sda3
 ```
 
 4. Mount the partitions
@@ -57,7 +58,7 @@ sudo mount /dev/disk/by-label/NIXBOOT /mnt/boot
 sudo nixos-install --flake github:kenlasko/nixos-wsl#nas01 --root /mnt
 ```
 
-4. Reboot. Should automatically login as `ken`. Then run:
+4. Reboot. Should automatically login as `ken` using private key. Then run:
 ```bash
 sudo nixos-rebuild switch --flake github:kenlasko/nixos-wsl#nas01 --refresh
 ```
