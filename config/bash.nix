@@ -40,6 +40,7 @@
     '';
 
     shellAliases = {
+      b2 = "backblaze-b2";
       cilium = "cilium --namespace=cilium";
       cnpg = "kubectl cnpg -n cnpg";
       k = "kubectl";

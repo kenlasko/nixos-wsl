@@ -62,9 +62,12 @@
   home.sessionPath = [ "$HOME/.akeyless/bin" ];
   
   home.sessionVariables = {
+    B2_APPLICATION_KEY_ID = "$(cat /run/secrets/backblaze-b2-accesskey-id)";
+    B2_APPLICATION_KEY = "$(cat /run/secrets/backblaze-b2-accesskey)";
     PGHOST = "192.168.10.3";
     PGUSER = "postgres";
     PGPASSWORD = "$(cat /run/secrets/postgresql-root-password)";
+
   };
 
   # Start VSCode Server which makes it easy to integrate with VSCode on Windows

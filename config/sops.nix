@@ -55,6 +55,12 @@
         path = "/home/ken/omni/s3-config.yaml";
         mode = "0444";
     };
+    secrets.backblaze-b2-accesskey = {
+        owner = "ken";
+    };
+    secrets.backblaze-b2-accesskey-id = {
+        owner = "ken";
+    };
     secrets.postgresql-root-password = {
         owner = "ken";
     };
