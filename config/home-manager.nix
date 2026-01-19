@@ -70,19 +70,6 @@
 
   };
 
-  # Start VSCode Server which makes it easy to integrate with VSCode on Windows
-  # Note: for future updates, have to run "nix-prefetch-url --unpack https://github.com/msteen/nixos-vscode-server/tarball/master"
-  #       to get the sha256 value
-  imports = [
-    "${fetchTarball {
-      url = "https://github.com/msteen/nixos-vscode-server/tarball/master";
-      sha256 = "1rdn70jrg5mxmkkrpy2xk8lydmlc707sk0zb35426v1yxxka10by";
-    }}/modules/vscode-server/home.nix"
-    ./bash.nix
-  ];
-
-  services.vscode-server.enable = true;
-
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
