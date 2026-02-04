@@ -30,7 +30,7 @@ in
     kubent                  # Easily check your cluster for use of deprecated APIs
     kustomize               # Tool for customizing Kubernetes YAML configurations
     nodejs                  # For development testing
-    pgloader                # PostgreSQL migration tool
+    # pgloader                # PostgreSQL migration tool. Temporarily removed due to upstream bug
     popeye                  # Kubernetes cluster resource sanitizer
     postgresql_18           # PostgreSQL CLI
 #    omnictl                # SideroLabs Omni CLI. Doesn't work, so using local install in flake.nix
