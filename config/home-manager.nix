@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./bash.nix
+  ];
   home.username = "ken";
   home.homeDirectory = lib.mkForce "/home/ken";
   home.enableNixpkgsReleaseCheck = false;
