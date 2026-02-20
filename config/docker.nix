@@ -7,6 +7,9 @@
     extraPackages = with pkgs; [
       docker-buildx
     ];
+    daemon.settings = {
+      dns = [ "192.168.10.53" "192.168.1.17" "192.168.1.18" ];
+    };
   };
 
   # Auto-login to Docker Hub using /run/secrets/docker_pat
