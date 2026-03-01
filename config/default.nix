@@ -5,6 +5,7 @@
 , ...
 }: {
   imports = [
+    ./claude-code.nix
     ./docker.nix
     ./git.nix
     ./k8s.nix
