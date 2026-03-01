@@ -18,6 +18,8 @@
     openssl             # OpenSSL is a robust, full-featured open-source toolkit
     pre-commit          # Framework for managing and maintaining multi-language pre-commit hooks
     trufflehog          # Scans git repositories for secrets
+    nodePackages.typescript              # TypeScript compiler
+    nodePackages.typescript-language-server  # TypeScript/JavaScript LSP
     wget                # A network utility to retrieve files from the Web
     yq-go               # Command-line YAML processor
   ];
