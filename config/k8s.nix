@@ -23,11 +23,9 @@ in
     kubectl                 # Kubernetes CLI tool
     kubectl-cnpg            # CloudNative PostgreSQL plugin for kubectl
     kubectl-cnpg-completion # Wrapper script that enables kubectl cnpg completions
-    kubeseal                # A Kubernetes controller and tool for one-way encrypted Secrets
     kubernetes-helm         # Package manager for kubernetes
     krew	                  # Kubectl package installer
     kubelogin-oidc          # OIDC auth provider for kubectl
-    kubent                  # Easily check your cluster for use of deprecated APIs
     kustomize               # Tool for customizing Kubernetes YAML configurations
     nodejs                  # For development testing
     # pgloader                # PostgreSQL migration tool. Temporarily removed due to upstream bug
