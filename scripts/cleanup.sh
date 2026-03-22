@@ -10,6 +10,7 @@ git clone git@github.com:kenlasko/k8s.git
 git clone git@github.com:kenlasko/omni.git
 git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/pxeboot.git
+git clone git@github.com:kenlasko/monize.git
 
 # Symlink `/etc/nixos` to Github synced folder. Done so we can easily save config in Git
 echo "Symlink `/etc/nixos` to Github synced folder."
