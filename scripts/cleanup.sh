@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Fixing permissions on .ssh, .config, and .kube directories"
-sudo chown -R ${USER}:users .ssh .config .kube
+sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 
 echo "Cloning private repos"
 cd ~
@@ -11,6 +11,8 @@ git clone git@github.com:kenlasko/omni.git
 git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/pxeboot.git
 git clone git@github.com:kenlasko/monize.git
+git clone git@github.com:kenlasko/docker-rpi1.git
+git clone git@github.com:kenlasko/docker-rpi2.git
 
 # Symlink `/etc/nixos` to Github synced folder. Done so we can easily save config in Git
 echo "Symlink `/etc/nixos` to Github synced folder."
