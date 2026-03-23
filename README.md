@@ -92,6 +92,7 @@ sudo chown -R ${USER}:users ~/.ssh ~/.config ~/.kube
 
 6. Run the [nixos/scripts/cleanup.sh](scripts/cleanup.sh) script to perform final setup and cleanup tasks. 
 ```bash
+git clone git@github.com:kenlasko/nixos-wsl.git nixos
 ~/nixos/scripts/cleanup.sh
 ```
 
