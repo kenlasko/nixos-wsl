@@ -169,6 +169,7 @@
                 })
                 pkgs.age
                 pkgs.git
+                pkgs.unzip
               ];
             })
           ] ++ wslConfig; # Append the conditional wslConfig list here
