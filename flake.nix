@@ -168,6 +168,7 @@
                   meta.platforms = [ system ];
                 })
                 pkgs.age
+                pkgs.file
                 pkgs.git
                 pkgs.unzip
               ];
