@@ -43,6 +43,7 @@
       b2 = "backblaze-b2";
       cilium = "cilium --namespace=cilium";
       cnpg = "kubectl cnpg -n cnpg";
+      git-clean-branches = "git branch --merged main | grep -vE '^\*?\s*main$' | xargs -r git branch -d";
       k = "kubectl";
       kuc = "kubectl config use-context";
       nano = "nano --modernbindings";
