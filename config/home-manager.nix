@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [
     ./bash.nix
+    inputs.nix-index-database.hmModules.nix-index
   ];
+
+  programs.nix-index-database.comma.enable = true;
   home.username = "ken";
   home.homeDirectory = lib.mkForce "/home/ken";
   home.enableNixpkgsReleaseCheck = false;

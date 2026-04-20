@@ -8,6 +8,10 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nix-ld.url = "github:Mic92/nix-ld";
     sops-nix.url = "github:Mic92/sops-nix";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05"; # Match stable nixpkgs branch
       inputs.nixpkgs.follows = "nixpkgs"; # Follows unstable unless overridden
