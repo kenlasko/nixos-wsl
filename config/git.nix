@@ -12,7 +12,6 @@
       userEmail = "ken.lasko@gmail.com";
 
       extraConfig = {
-
         init.defaultBranch = "main";
         url = {
           "ssh://git@github.com" = {
@@ -23,6 +22,7 @@
         gpg.format = "ssh";
         user.signingkey = "~/.ssh/id_codesign.pub";  # This secret is stored in age-encrypted secrets.yaml
         commit.gpgsign = true;
+        fetch.prune = true;
       };
     };
   };
