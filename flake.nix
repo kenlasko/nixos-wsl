@@ -47,11 +47,17 @@
                 # Include the base WSL module path
                 nixos-wsl.nixosModules.default
                 # Include the specific WSL settings as a separate module element
-                ({ pkgs, ... }: { 
+                ({ pkgs, ... }: {
                   wsl.enable = true;
                   wsl.defaultUser = "ken";
                   # Add other WSL specific options here if needed
-                  environment.systemPackages = with pkgs; [ wslu ];
+                  # wslu was discontinued upstream; provide a minimal wslview shim
+                  # that opens URLs/files via Windows interop.
+                  environment.systemPackages = [
+                    (pkgs.writeShellScriptBin "wslview" ''
+                      exec cmd.exe /c start "$@" 2>/dev/null
+                    '')
+                  ];
                 })
               ]
             else
