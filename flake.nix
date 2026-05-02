@@ -13,8 +13,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05"; # Match stable nixpkgs branch
-      inputs.nixpkgs.follows = "nixpkgs"; # Follows unstable unless overridden
+      url = "github:nix-community/home-manager"; # master tracks nixos-unstable
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
