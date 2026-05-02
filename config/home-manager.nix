@@ -3,7 +3,7 @@
 {
   imports = [
     ./bash.nix
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.nix-index-database.homeModules.nix-index
   ];
 
   programs.nix-index-database.comma.enable = true;
@@ -21,8 +21,8 @@
     openssl             # OpenSSL is a robust, full-featured open-source toolkit
     pre-commit          # Framework for managing and maintaining multi-language pre-commit hooks
     trufflehog          # Scans git repositories for secrets
-    nodePackages.typescript              # TypeScript compiler
-    nodePackages.typescript-language-server  # TypeScript/JavaScript LSP
+    typescript              # TypeScript compiler
+    typescript-language-server  # TypeScript/JavaScript LSP
     wget                # A network utility to retrieve files from the Web
     yq-go               # Command-line YAML processor
   ];
