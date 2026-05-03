@@ -160,7 +160,8 @@ sudo nixos-rebuild switch
 
 ## Full Rebuild
 ```bash
-sudo nixos-rebuild switch --recreate-lock-file --flake .
+nix flake update
+sudo nixos-rebuild switch --flake .
 ```
 ## Delete all historical versions older than 7 days
 ```bash
