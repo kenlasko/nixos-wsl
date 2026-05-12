@@ -36,7 +36,7 @@
       contexts:
           onprem-omni:
               endpoints:
-                  - https://omni.ucdialplans.com/
+                  - https://omni.laskonet.com/
               auth:
                   siderov1:
                       identity: ken.lasko@gmail.com
@@ -51,7 +51,7 @@
     text = ''
       contexts:
           default:
-              url: https://omni.ucdialplans.com/
+              url: https://omni.laskonet.com/
               auth:
                   siderov1:
                       identity: ken.lasko@gmail.com
