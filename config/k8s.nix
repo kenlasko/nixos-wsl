@@ -28,6 +28,7 @@ in
     kubelogin-oidc          # OIDC auth provider for kubectl
     kustomize               # Tool for customizing Kubernetes YAML configurations
     nodejs                  # For development testing
+    openshift               # OpenShift CLI (oc)
     # pgloader                # PostgreSQL migration tool. Temporarily removed due to upstream bug
     popeye                  # Kubernetes cluster resource sanitizer
     postgresql_18           # PostgreSQL CLI
