@@ -76,6 +76,7 @@
     PGHOST = "192.168.10.3";
     PGUSER = "postgres";
     PGPASSWORD = "$(cat /run/secrets/postgresql-root-password)";
+    GITLAB_TOKEN = "$(cat /run/secrets/glab_token)";
 
   };
 

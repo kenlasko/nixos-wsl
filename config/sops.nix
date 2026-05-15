@@ -94,5 +94,9 @@
         owner = "ken";
         mode = "0400";
     };
+    secrets.glab_token = {
+        owner = "ken";
+        mode = "0400";
+    };
   };
 }

@@ -3,6 +3,7 @@
 }: {
   home-manager.users.ken = {
     home.packages = with pkgs; [
+      glab
     ];
 
     programs.git = {
