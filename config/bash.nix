@@ -14,7 +14,12 @@
       export BROWSER=wslview
       export NIX_CONFIG="experimental-features = nix-command flakes"
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-      export KUBECONFIG="$HOME/.kube/config:$HOME/.kube/openshift"
+      # openshift must come first: on a merged KUBECONFIG, current-context and
+      # any duplicately-named user/context resolve from the first file. oc-login
+      # writes the fresh token + "work" context here, so it must win over the
+      # stale duplicate that ~/.kube/config (secrets-managed) holds for the same
+      # cluster user. Other contexts (cloud/home/lab/omni-*) still merge in.
+      export KUBECONFIG="$HOME/.kube/openshift:$HOME/.kube/config"
       complete -F __start_kubectl k
       export USERNAMETEST="${config.home.username}"
 
