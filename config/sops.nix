@@ -72,20 +72,6 @@
         owner = "ken";
         mode = "0400";
     };
-    secrets.sealed-secrets-signing-key = {
-        owner = "ken";
-    };
-    secrets.sealed-secrets-private-key = {
-        owner = "ken";
-    };
-    secrets."global-sealed-secrets-key.yaml" = {
-        owner = "ken";
-        mode = "0400";
-    };
-    secrets."default-sealing-key.yaml" = {
-        owner = "ken";
-        mode = "0400";
-    };
     secrets."eso-secretstore-secrets.yaml" = {
         owner = "ken";
         mode = "0400";
