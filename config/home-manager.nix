@@ -32,9 +32,9 @@
     enable = true;
     target = ".talos/config";
     text = ''
-      context: onprem-omni
+      context: default
       contexts:
-          onprem-omni:
+          default:
               endpoints:
                   - https://omni.laskonet.com/
               auth:
