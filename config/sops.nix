@@ -61,6 +61,12 @@
     secrets.backblaze-b2-accesskey-id = {
         owner = "ken";
     };
+    secrets.openshift_username = {
+        owner = "ken";
+    };
+    secrets.openshift_password = {
+        owner = "ken";
+    };
     secrets.postgresql-root-password = {
         owner = "ken";
     };

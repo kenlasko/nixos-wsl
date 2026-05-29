@@ -26,13 +26,46 @@
       # Log into OpenShift, writing token + context to a dedicated kubeconfig
       # so it merges into KUBECONFIG without disturbing ~/.kube/config.
       # Renames the auto-generated context to "work".
+      #
+      # With no args it logs in automatically: it reads the credentials from
+      # the sops secrets and fetches an OAuth token the same way the web
+      # console's "Copy login command" does (the openshift-challenging-client
+      # OAuth flow), so no manual browser token-copying is needed.
+      #
       # Usage:
+      #   oc-login                                             (automatic)
       #   oc-login --web --server=https://api.cluster.example.com:6443
-      #   oc-login --token=sha256~... --server=https://...   (paste from web console)
+      #   oc-login --token=sha256~... --server=https://...     (paste from web console)
       oc-login() {
         mkdir -p "$HOME/.kube"
         local kc="$HOME/.kube/openshift"
-        KUBECONFIG="$kc" oc login "$@" || return $?
+        local server="https://api.okd41.nectarsandbox.com:6443"
+
+        if [[ $# -gt 0 ]]; then
+          # Explicit args: pass straight through to `oc login`.
+          KUBECONFIG="$kc" oc login "$@" || return $?
+        else
+          local user pass issuer token
+          user=$(< /run/secrets/openshift_username) \
+            || { echo "oc-login: cannot read /run/secrets/openshift_username" >&2; return 1; }
+          pass=$(< /run/secrets/openshift_password) \
+            || { echo "oc-login: cannot read /run/secrets/openshift_password" >&2; return 1; }
+
+          issuer=$(curl -fsSk "$server/.well-known/oauth-authorization-server" | jq -r .issuer) \
+            || { echo "oc-login: OAuth discovery failed against $server" >&2; return 1; }
+
+          token=$(curl -sk -u "$user:$pass" -H "X-CSRF-Token: 1" \
+            "$issuer/oauth/authorize?client_id=openshift-challenging-client&response_type=token" \
+            -o /dev/null -D - | sed -n 's/.*access_token=\([^&]*\).*/\1/p' | tr -d '\r')
+          if [[ -z "$token" ]]; then
+            echo "oc-login: failed to obtain token (check credentials)" >&2
+            return 1
+          fi
+
+          KUBECONFIG="$kc" oc login --token="$token" --server="$server" \
+            --insecure-skip-tls-verify=true >/dev/null || return $?
+        fi
+
         local current
         current=$(KUBECONFIG="$kc" kubectl config current-context)
         if [[ "$current" != "work" ]]; then
