@@ -11,6 +11,7 @@ git clone git@github.com:kenlasko/omni.git
 git clone git@github.com:kenlasko/docker.git
 git clone git@github.com:kenlasko/pxeboot.git
 git clone git@github.com:kenlasko/monize.git
+git clone git@github.com:kenlasko/monize.wiki.git
 git clone git@github.com:kenlasko/docker-rpi1.git
 git clone git@github.com:kenlasko/docker-rpi2.git
 
