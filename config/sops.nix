@@ -21,6 +21,16 @@
         path = "/home/ken/.ssh/id_ed25519.pub";
         mode = "0400";
     };
+    secrets.server_access= {
+        owner = "ken";
+        path = "/home/ken/.ssh/server_access";
+        mode = "0400";
+    };
+    secrets."server_access.pub" = {
+        owner = "ken";
+        path = "/home/ken/.ssh/server_access.pub";
+        mode = "0400";
+    };
     secrets.docker_pat = {
         owner = "ken";
         mode = "0400";
