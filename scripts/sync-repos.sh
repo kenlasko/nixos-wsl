@@ -9,6 +9,8 @@ repos=(
     "git@github.com:kenlasko/omni.git omni"
     "git@github.com:kenlasko/docker.git docker"
     "git@github.com:kenlasko/pxeboot.git pxeboot"
+    "git@github.com:kenlasko/monize.git monize"
+    "git@github.com:kenlasko/monize.wiki.git monize.wiki"
 )
 
 for repo in "${repos[@]}"; do
