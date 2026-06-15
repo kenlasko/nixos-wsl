@@ -5,6 +5,9 @@
       pip
       pytest
       virtualenv
+      pyjwt
+      cryptography
+      requests
     ]))
   ];
 }
