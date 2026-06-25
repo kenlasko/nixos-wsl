@@ -51,10 +51,10 @@
           pass=$(< /run/secrets/openshift_password) \
             || { echo "oc-login: cannot read /run/secrets/openshift_password" >&2; return 1; }
 
-          issuer=$(curl -fsSk "$server/.well-known/oauth-authorization-server" | jq -r .issuer) \
-            || { echo "oc-login: OAuth discovery failed against $server" >&2; return 1; }
+          issuer=$(curl -fsSk --connect-timeout 10 "$server/.well-known/oauth-authorization-server" | jq -r .issuer) \
+            || { echo "oc-login: OAuth discovery failed against $server (cluster reachable? VPN up?)" >&2; return 1; }
 
-          token=$(curl -sk -u "$user:$pass" -H "X-CSRF-Token: 1" \
+          token=$(curl -sk --connect-timeout 10 -u "$user:$pass" -H "X-CSRF-Token: 1" \
             "$issuer/oauth/authorize?client_id=openshift-challenging-client&response_type=token" \
             -o /dev/null -D - | sed -n 's/.*access_token=\([^&]*\).*/\1/p' | tr -d '\r')
           if [[ -z "$token" ]]; then
