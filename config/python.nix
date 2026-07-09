@@ -6,6 +6,7 @@
       pytest
       virtualenv
       pyjwt
+      jwcrypto
       cryptography
       requests
     ]))
