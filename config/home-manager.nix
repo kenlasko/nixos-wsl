@@ -15,6 +15,7 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # ggshield            # GitGuardian CLI for scanning secrets in code
+    dnsutils            # DNS lookup tools: dig, nslookup, host
     gh                  # GitHub CLI for managing repos, PRs, issues from the terminal
     go                  # Go programming language
     jq                  # Lightweight and flexible command-line JSON processor
