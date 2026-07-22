@@ -30,9 +30,23 @@
           omnictlSrc = omnictlSrcMap.${system} or (throw "Unsupported system for omnictl: ${system}");
 
           # Add allowUnfree to BOTH nixpkgs versions
+          # marshmallow 3.26 imports `packaging` at runtime but the nixpkgs
+          # derivation omits it, breaking ggshield (ModuleNotFoundError:
+          # No module named 'packaging'). Add it back until fixed upstream.
+          marshmallowPackagingOverlay = final: prev: {
+            pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+              (pyfinal: pyprev: {
+                marshmallow = pyprev.marshmallow.overridePythonAttrs (o: {
+                  propagatedBuildInputs = (o.propagatedBuildInputs or [ ]) ++ [ pyfinal.packaging ];
+                });
+              })
+            ];
+          };
+
           pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            overlays = [ marshmallowPackagingOverlay ];
           };
 
           pkgs-stable = import inputs.nixpkgs-stable {
@@ -94,6 +108,10 @@
 
           # Combine the unconditional modules with the conditional WSL modules
           modules = [
+            # Apply overlays to the system nixpkgs (used by home-manager via
+            # useGlobalPkgs). Fixes ggshield's missing `packaging` dep.
+            { nixpkgs.overlays = [ marshmallowPackagingOverlay ]; }
+
             # Basic host setup
             ({ config, pkgs, ... }: {
               networking.hostName = hostname;
