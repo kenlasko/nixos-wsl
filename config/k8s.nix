@@ -18,7 +18,7 @@ in
     doppler                 # CLI for managing Doppler secrets and configuration
     hubble                  # CLI to troubleshoot Cilium network issues
     infisical               # CLI for managing Infisical secrets and configuration
-    k9s                     # k9s Kubernetes TUI
+    # k9s -> installed via programs.k9s in config/home-manager.nix
     cmctl                   # Command line tool for managing Cert Manager
     kubectl                 # Kubernetes CLI tool
     kubectl-cnpg            # CloudNative PostgreSQL plugin for kubectl

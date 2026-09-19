@@ -81,6 +81,24 @@
 
   };
 
+  # k9s Kubernetes TUI. Installed here rather than in systemPackages so that
+  # ~/.config/k9s/config.yaml is managed declaratively.
+  programs.k9s = {
+    enable = true;
+
+    settings.k9s = {
+      refreshRate = 2;
+
+      logger = {
+        tail = 5000;        # Lines fetched when a log view is opened (k9s default: 100)
+        buffer = 20000;     # Lines kept in memory before the oldest are dropped (default: 5000)
+        sinceSeconds = -1;  # -1 = fetch everything the container still has
+        textWrap = true;    # Wrap long log lines instead of truncating them
+        showTime = false;   # Timestamps are usually already in the log line
+      };
+    };
+  };
+
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
