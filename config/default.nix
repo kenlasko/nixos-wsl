@@ -12,5 +12,6 @@
     ./python.nix
     ./sops.nix
     ./ssh.nix
+    ./twingate.nix
   ];
 }
