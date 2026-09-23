@@ -178,6 +178,7 @@
               nix.settings.experimental-features = [ "nix-command" "flakes" ];
               nix.settings.download-buffer-size = 200000000;
               nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 1w"; };
+              nix.optimise = { automatic = true; dates = [ "weekly" ]; };
               nixpkgs.config.allowUnfree = true;
 
               environment.systemPackages = [
