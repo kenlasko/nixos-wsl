@@ -18,6 +18,7 @@
     dnsutils            # DNS lookup tools: dig, nslookup, host
     gh                  # GitHub CLI for managing repos, PRs, issues from the terminal
     go                  # Go programming language
+    kiro-cli            # Kiro AI agent CLI (unfree)
     jq                  # Lightweight and flexible command-line JSON processor
     openssl             # OpenSSL is a robust, full-featured open-source toolkit
     pre-commit          # Framework for managing and maintaining multi-language pre-commit hooks
