@@ -43,10 +43,16 @@
             ];
           };
 
+          # Kiro Crew gateway, packaged as a pure Nix derivation from the 0.7.0
+          # wheel. Exposes pkgs.kirocrew (see packages/kirocrew.nix).
+          kirocrewOverlay = final: prev: {
+            kirocrew = final.callPackage ./packages/kirocrew.nix { };
+          };
+
           pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            overlays = [ marshmallowPackagingOverlay ];
+            overlays = [ marshmallowPackagingOverlay kirocrewOverlay ];
           };
 
           pkgs-stable = import inputs.nixpkgs-stable {
@@ -110,7 +116,7 @@
           modules = [
             # Apply overlays to the system nixpkgs (used by home-manager via
             # useGlobalPkgs). Fixes ggshield's missing `packaging` dep.
-            { nixpkgs.overlays = [ marshmallowPackagingOverlay ]; }
+            { nixpkgs.overlays = [ marshmallowPackagingOverlay kirocrewOverlay ]; }
 
             # Basic host setup
             ({ config, pkgs, ... }: {
@@ -229,6 +235,12 @@
 
         # Alias (unchanged)
         "nixos" = self.nixosConfigurations."wsl";
+
+        # Kiro Crew spoke: the wsl config PLUS the opt-in kiro gateway module.
+        # Apply ONLY with:  sudo nixos-rebuild switch --flake /etc/nixos#kiro
+        "kiro" = self.nixosConfigurations."wsl".extendModules {
+          modules = [ ./config/kiro.nix ];
+        };
       };
 
       # Formatter (unchanged)

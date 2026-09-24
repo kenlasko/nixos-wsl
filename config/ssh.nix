@@ -17,11 +17,11 @@
     settings = {
       PasswordAuthentication = false;
       PubkeyAuthentication = true;
+      PermitRootLogin = "no";
+      AllowUsers = [ "ken" ];
     };
-    extraConfig = ''
-      PermitRootLogin no
-      AllowUsers ken
-      UsePAM yes
-    '';
+    # NOTE: previously extraConfig re-declared `UsePAM yes`, contradicting
+    # settings.UsePAM above. That stray line is removed; PermitRootLogin and
+    # AllowUsers now live in settings (typed, canonical) instead of extraConfig.
   };
 }
