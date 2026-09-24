@@ -45,20 +45,47 @@
           # Explicit args: pass straight through to `oc login`.
           KUBECONFIG="$kc" oc login "$@" || return $?
         else
-          local user pass issuer token
+          local user pass discovery issuer resp token rc
           user=$(< /run/secrets/openshift_username) \
             || { echo "oc-login: cannot read /run/secrets/openshift_username" >&2; return 1; }
           pass=$(< /run/secrets/openshift_password) \
             || { echo "oc-login: cannot read /run/secrets/openshift_password" >&2; return 1; }
 
-          issuer=$(curl -fsSk --connect-timeout 10 "$server/.well-known/oauth-authorization-server" | jq -r .issuer) \
-            || { echo "oc-login: OAuth discovery failed against $server (cluster reachable? VPN up?)" >&2; return 1; }
+          # Keep curl out of a pipeline: in `curl ... | jq`, $? belongs to jq,
+          # and jq exits 0 on empty input. A connection failure therefore slipped
+          # past this check and resurfaced below as a bogus "check credentials".
+          discovery=$(curl -fsSk --connect-timeout 10 \
+            "$server/.well-known/oauth-authorization-server")
+          rc=$?
+          if [[ $rc -ne 0 ]]; then
+            echo "oc-login: cannot reach $server for OAuth discovery (curl exit $rc)" >&2
+            echo "  Check what the name resolves to: the public record for this" >&2
+            echo "  cluster is not routable. Only the internal 10.0.0.0/16 address" >&2
+            echo "  is reachable over the VPN, and some clients return the public" >&2
+            echo "  record instead. Compare: dig +short $(echo "$server" | sed -e 's|https://||' -e 's|:.*||')" >&2
+            return 1
+          fi
 
-          token=$(curl -sk --connect-timeout 10 -u "$user:$pass" -H "X-CSRF-Token: 1" \
+          issuer=$(jq -re .issuer <<<"$discovery") \
+            || { echo "oc-login: OAuth discovery at $server returned no issuer" >&2; return 1; }
+
+          resp=$(curl -sk --connect-timeout 10 -u "$user:$pass" -H "X-CSRF-Token: 1" \
             "$issuer/oauth/authorize?client_id=openshift-challenging-client&response_type=token" \
-            -o /dev/null -D - | sed -n 's/.*access_token=\([^&]*\).*/\1/p' | tr -d '\r')
+            -o /dev/null -D -)
+          rc=$?
+          if [[ $rc -ne 0 ]]; then
+            echo "oc-login: cannot reach OAuth issuer $issuer (curl exit $rc)" >&2
+            return 1
+          fi
+
+          token=$(sed -n 's/.*access_token=\([^&]*\).*/\1/p' <<<"$resp" | tr -d '\r')
           if [[ -z "$token" ]]; then
-            echo "oc-login: failed to obtain token (check credentials)" >&2
+            if grep -qiE '^HTTP/[0-9.]+ 401' <<<"$resp"; then
+              echo "oc-login: credentials rejected for user '$user' (HTTP 401)" >&2
+            else
+              echo "oc-login: no access_token in OAuth response; status line(s):" >&2
+              grep -iE '^HTTP/' <<<"$resp" >&2 || echo "  (no HTTP status returned)" >&2
+            fi
             return 1
           fi
 
