@@ -76,6 +76,9 @@ in
     };
   };
 
+  # Leave Docker on default DNS resolution (no "dns" key in daemon.json).
+  local.docker.customDns = false;
+
   systemd.services.kirocrew-gateway = {
     description = "Kiro Crew gateway (NixOS-native spoke for the Windows hub)";
     wantedBy = [ "multi-user.target" ];
