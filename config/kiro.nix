@@ -7,22 +7,42 @@
 #     sudo nixos-rebuild switch --flake /etc/nixos#kiro
 #
 # A normal `--flake /etc/nixos#wsl` (or the `nixos` alias) build does NOT
-# include it, so the gateway service exists only on the opt-in generation.
+# include it, so the gateway service (and the playwright-cli below) exist only
+# on the opt-in generation.
 #
-# It runs the gateway from the pip venv at /home/ken/.kirocrew-venv, injecting
-# the LD_LIBRARY_PATH numpy needs on NixOS (libstdc++.so.6 from gcc-lib, libz.so.1
-# from zlib) via lib.makeLibraryPath -- resolved at BUILD time from package refs,
-# so a channel update recomputes the /nix/store paths and can never leave a
-# stale hardcoded hash.
+# It runs the gateway from `pkgs.kirocrew` -- a pure Nix derivation of the
+# kirocrew wheel (see packages/kirocrew.nix), no venv and no runtime pip.
+#
+# BROWSER TOOL SUPPORT (playwright-cli)
+#   The gateway's browser tool shells out to a binary named exactly
+#   `playwright-cli`, resolved by ABSOLUTE PATH from a fixed allow-list that
+#   includes /run/current-system/sw/bin -- where environment.systemPackages
+#   lands. We add a fully declarative `playwright-cli` there (see
+#   packages/playwright-cli.nix): the npm package @playwright/cli pinned to the
+#   version whose bundled Playwright browser build numbers match the nixpkgs
+#   `playwright-driver` browsers, wired via PLAYWRIGHT_BROWSERS_PATH into the
+#   /nix/store browsers dir. No curl installer, no CDN download, no writes into
+#   ~/.kiro/crew/playwright-cli -- launch is fully offline from store paths.
+#
+#   playwright-cli is defined here via callPackage (NOT a shared overlay) so it
+#   stays scoped to this kiro module only and never appears on the other hosts.
 #
 # Prerequisites (already done imperatively, listed here for reproducibility):
-#   * the venv exists at /home/ken/.kirocrew-venv with `kirocrew` installed
 #   * SSH key auth works because config/ssh.nix sets services.openssh UsePAM=false
 #     and PasswordAuthentication=false (the tunnel signs with an empty-passphrase key)
 
 { config, lib, pkgs, ... }:
+
+let
+  # Scoped to the kiro module only: pkgs.playwright-cli is intentionally NOT an
+  # overlay, so it exists on this opt-in generation and nowhere else.
+  playwright-cli = pkgs.callPackage ../packages/playwright-cli.nix { };
+in
 {
-  environment.systemPackages = [ pkgs.kirocrew ];
+  environment.systemPackages = [
+    pkgs.kirocrew
+    playwright-cli
+  ];
 
   systemd.services.kirocrew-gateway = {
     description = "Kiro Crew gateway (NixOS-native spoke for the Windows hub)";
