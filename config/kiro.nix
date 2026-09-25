@@ -21,10 +21,9 @@
 #     and PasswordAuthentication=false (the tunnel signs with an empty-passphrase key)
 
 { config, lib, pkgs, ... }:
-
+{
   environment.systemPackages = [ pkgs.kirocrew ];
 
-{
   systemd.services.kirocrew-gateway = {
     description = "Kiro Crew gateway (NixOS-native spoke for the Windows hub)";
     wantedBy = [ "multi-user.target" ];
@@ -33,8 +32,6 @@
       Type = "simple";
       User = "ken";
       WorkingDirectory = "/home/ken";
-      # Call the venv python against the real entry script directly -- no bash
-      # wrapper and no runtime `nix-build`, so it works in the minimal service env.
       ExecStart = "${pkgs.kirocrew}/bin/kirocrew gateway";
       Restart = "on-failure";
       RestartSec = 5;
