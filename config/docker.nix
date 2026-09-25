@@ -9,6 +9,17 @@
     ];
     daemon.settings = {
       dns = [ "192.168.10.53" "192.168.1.17" "192.168.1.18" ];
+      # Cap BuildKit cache; it grew to 200+ GB unbounded
+      builder.gc = {
+        enabled = true;
+        defaultKeepStorage = "20GB";
+      };
+    };
+    # Weekly cleanup of stopped containers, dangling images and old build cache
+    autoPrune = {
+      enable = true;
+      dates = "weekly";
+      flags = [ "--filter=until=168h" ];
     };
   };
 
