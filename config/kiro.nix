@@ -22,13 +22,13 @@
 
 { config, lib, pkgs, ... }:
 
+  environment.systemPackages = [ pkgs.kirocrew ];
+
 {
   systemd.services.kirocrew-gateway = {
     description = "Kiro Crew gateway (NixOS-native spoke for the Windows hub)";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-
-
     serviceConfig = {
       Type = "simple";
       User = "ken";
