@@ -68,7 +68,7 @@
       sha256 = "0b1nwpbfnvsgq0ki8f8ywgdmspddipma26bgxhy780iqzrw42a43";
     };
   };
-  home.sessionPath = [ "$HOME/.akeyless/bin" ];
+  home.sessionPath = [ "$HOME/.akeyless/bin" "$HOME/.npm-global/bin" ];
   
   home.sessionVariables = {
     B2_APPLICATION_KEY_ID = "$(cat /run/secrets/backblaze-b2-accesskey-id)";
@@ -100,4 +100,20 @@
 
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # trail-code (@trailhq/trail-code) isn't in nixpkgs, so it can't be a
+  # sandboxed Nix derivation (unlike packages/playwright-cli.nix): it pulls in
+  # tree-sitter grammars that compile native bindings via node-gyp at install
+  # time (needs make/gcc/python3, not just nodejs), and npm's install-scripts
+  # allowlist blocks those (and trail-code's own postinstall) unless
+  # explicitly allowed. Installed imperatively via `npm install -g` into a
+  # user-writable prefix on every activation instead.
+  # `trail init` is interactive/per-project, so run it manually after rebuild.
+  home.activation.installTrailCode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    export PATH="${lib.makeBinPath [ pkgs.nodejs pkgs.gnumake pkgs.gcc pkgs.python3 ]}:$PATH"
+    run npm install -g \
+      --allow-scripts=@trailhq/trail-code,tree-sitter,tree-sitter-go,tree-sitter-java,tree-sitter-kotlin,tree-sitter-php,tree-sitter-python,@davisvaughan/tree-sitter-r,tree-sitter-swift,tree-sitter-typescript,tree-sitter-cli,tree-sitter-javascript \
+      --prefix "$HOME/.npm-global" @trailhq/trail-code \
+      || echo "warning: trail-code npm install failed (offline? build toolchain missing?)" >&2
+  '';
 }
