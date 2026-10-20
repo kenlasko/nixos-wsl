@@ -1,7 +1,12 @@
 { pkgs
 , config
 , ...
-}: {
+}:
+let
+  # `oc login --web` opens the browser via xdg-open, which WSL lacks.
+  xdgOpenWsl = pkgs.writeShellScriptBin "xdg-open" ''exec wslview "$@"'';
+in
+{
   programs.bash = {
     enable = true;
     enableCompletion = true;
@@ -25,23 +30,48 @@
 
       # Log into OpenShift, writing token + context to a dedicated kubeconfig
       # so it merges into KUBECONFIG without disturbing ~/.kube/config.
-      # Renames the auto-generated context to "work".
+      # Renames the auto-generated context to "work" (sandbox) or the
+      # cluster's name below.
       #
-      # With no args it logs in automatically: it reads the credentials from
-      # the sops secrets and fetches an OAuth token the same way the web
-      # console's "Copy login command" does (the openshift-challenging-client
-      # OAuth flow), so no manual browser token-copying is needed.
+      # With no args it logs into the sandbox automatically: it reads the
+      # credentials from the sops secrets and fetches an OAuth token the same
+      # way the web console's "Copy login command" does (the
+      # openshift-challenging-client OAuth flow), so no manual browser
+      # token-copying is needed.
+      #
+      # Lab and the prod clusters authenticate through GitLab. That is a
+      # browser redirect flow the challenging client can't drive with stored
+      # credentials, so they use `oc login --web`: the Windows browser opens
+      # (one click, or none, if already signed into GitLab) and oc catches the
+      # token on a localhost callback. The active context is left as it was,
+      # so switching to one of these is always deliberate: `kuc usprod`.
+      # Lab's context is "nectar-lab" because ~/.kube/config already has a
+      # "lab" (home lab), which the openshift kubeconfig would shadow.
       #
       # Usage:
-      #   oc-login                                             (automatic)
+      #   oc-login                                             (sandbox, automatic)
+      #   oc-login lab|usprod|euprod|inprod                    (via browser)
       #   oc-login --web --server=https://api.cluster.example.com:6443
       #   oc-login --token=sha256~... --server=https://...     (paste from web console)
       oc-login() {
         mkdir -p "$HOME/.kube"
         local kc="$HOME/.kube/openshift"
         local server="https://api.okd41.nectarsandbox.com:6443"
+        local ctx="work" prev="" web=""
 
-        if [[ $# -gt 0 ]]; then
+        case "''${1,,}" in
+          lab)    web="https://api.lab1.test.nectarvoip.com:6443"; ctx="nectar-lab" ;;
+          usprod) web="https://api.prod1.nectar.services:6443";    ctx="usprod" ;;
+          euprod) web="https://api.prod2.nectar.services:6443";    ctx="euprod" ;;
+          inprod) web="https://api.prod3.nectar.services:6443";    ctx="inprod" ;;
+        esac
+
+        if [[ -n "$web" ]]; then
+          shift
+          prev=$(KUBECONFIG="$kc" kubectl config current-context 2>/dev/null)
+          PATH="${xdgOpenWsl}/bin:$PATH" KUBECONFIG="$kc" \
+            oc login --web --server="$web" "$@" || return $?
+        elif [[ $# -gt 0 ]]; then
           # Explicit args: pass straight through to `oc login`.
           KUBECONFIG="$kc" oc login "$@" || return $?
         else
@@ -95,11 +125,23 @@
 
         local current
         current=$(KUBECONFIG="$kc" kubectl config current-context)
-        if [[ "$current" != "work" ]]; then
-          KUBECONFIG="$kc" kubectl config delete-context work >/dev/null 2>&1 || true
-          KUBECONFIG="$kc" kubectl config rename-context "$current" work
+        if [[ "$current" != "$ctx" ]]; then
+          KUBECONFIG="$kc" kubectl config delete-context "$ctx" >/dev/null 2>&1 || true
+          KUBECONFIG="$kc" kubectl config rename-context "$current" "$ctx"
+        fi
+
+        # oc login made the new context current; put back whatever was active
+        # before. With no current-context here, ~/.kube/config's one wins.
+        if [[ -n "$web" && "$prev" != "$ctx" ]]; then
+          if [[ -n "$prev" ]]; then
+            KUBECONFIG="$kc" kubectl config use-context "$prev" >/dev/null
+          else
+            KUBECONFIG="$kc" kubectl config unset current-context >/dev/null
+          fi
+          echo "oc-login: saved context '$ctx' (active context unchanged); switch with: kuc $ctx"
         fi
       }
+      complete -W "lab usprod euprod inprod" oc-login
       omni-upgrade() {
         local env="$1"
         if [[ -z "$env" ]]; then

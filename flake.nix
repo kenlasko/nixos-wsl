@@ -72,10 +72,12 @@
                   wsl.defaultUser = "ken";
                   # Add other WSL specific options here if needed
                   # wslu was discontinued upstream; provide a minimal wslview shim
-                  # that opens URLs/files via Windows interop.
+                  # that opens URLs/files via Windows interop. Not `cmd.exe /c start`:
+                  # cmd treats `&` as a command separator, truncating any URL with
+                  # a query string (and failing, e.g. `oc login --web`).
                   environment.systemPackages = [
                     (pkgs.writeShellScriptBin "wslview" ''
-                      exec cmd.exe /c start "$@" 2>/dev/null
+                      exec rundll32.exe url.dll,FileProtocolHandler "$@"
                     '')
                   ];
                 })
