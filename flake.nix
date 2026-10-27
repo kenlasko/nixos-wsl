@@ -70,6 +70,11 @@
                 ({ pkgs, ... }: {
                   wsl.enable = true;
                   wsl.defaultUser = "ken";
+                  # The pinned home-LAN resolvers in config/docker.nix are
+                  # unreachable from WSL hosts off that network, which breaks
+                  # every container DNS lookup (npm ci, gradle) during image
+                  # builds. Let Docker inherit the WSL resolver instead.
+                  local.docker.customDns = false;
                   # Add other WSL specific options here if needed
                   # wslu was discontinued upstream; provide a minimal wslview shim
                   # that opens URLs/files via Windows interop. Not `cmd.exe /c start`:
